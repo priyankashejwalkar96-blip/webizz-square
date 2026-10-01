@@ -33,17 +33,8 @@ export function Header() {
       <nav className="bg-white shadow-sm border-b border-gray-100">
         <div className="max-w-[1400px] mx-auto px-6 h-[72px] flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 cursor-pointer">
-            <div className="relative flex items-center justify-center">
-              <div className="absolute w-8 h-8 rounded-[50%] border border-[#ff5987] opacity-60 -rotate-45 scale-x-150 shadow-[0_0_10px_rgba(255,89,135,0.2)]"></div>
-              <div className="text-black font-black text-3xl italic tracking-tighter relative z-10 drop-shadow-sm flex items-center">
-                <span className="text-[#ff5987]">W</span>
-              </div>
-            </div>
-            <div className="flex flex-col ml-1">
-              <span className="text-[22px] tracking-tight leading-none font-medium text-black">ebiz<span className="font-light text-gray-500">square</span></span>
-              <span className="text-[7.5px] text-gray-500 tracking-[0.25em] mt-[3px] ml-[2px] uppercase">Make It Online</span>
-            </div>
+          <Link href="/" className="flex items-center cursor-pointer">
+            <img src="/dark-logo.png" alt="Webiz Square" className="h-12 w-auto" />
           </Link>
           
           {/* Nav Links */}

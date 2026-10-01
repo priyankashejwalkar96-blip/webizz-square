@@ -21,17 +21,8 @@ export function Footer() {
           {/* Column 1: Brand & Info */}
           <div className="flex flex-col gap-6 lg:ml-12">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 cursor-pointer">
-              <div className="relative flex items-center justify-center">
-                <div className="absolute w-8 h-8 rounded-[50%] border border-[#ff5987] opacity-60 -rotate-45 scale-x-150 shadow-[0_0_10px_rgba(255,89,135,0.3)]"></div>
-                <div className="text-white font-black text-3xl italic tracking-tighter relative z-10 drop-shadow-lg flex items-center">
-                  <span className="text-[#ff5987]">W</span>
-                </div>
-              </div>
-              <div className="flex flex-col ml-1">
-                <span className="text-[22px] tracking-tight leading-none font-medium">ebiz<span className="font-light opacity-90">square</span></span>
-                <span className="text-[7.5px] text-gray-400 tracking-[0.25em] mt-[3px] ml-[2px] uppercase">Make It Online</span>
-              </div>
+            <Link href="/" className="flex items-center cursor-pointer">
+              <img src="/white-logo.png" alt="Webiz Square" className="h-14 w-auto drop-shadow-md" />
             </Link>
             
             <p className="text-gray-300 text-sm leading-relaxed pr-4">
