@@ -1,9 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { Smartphone, ChevronRight, ArrowRight } from "lucide-react";
+import { QuoteModal } from "./QuoteModal";
 
 export function Header() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <div className="fixed top-0 w-full z-50">
       {/* Top Announcement Bar */}
@@ -72,11 +75,13 @@ export function Header() {
             <Link href="/contact" className="hover:text-[#ff5987] transition-colors">Contact</Link>
           </div>
           
-          <Link href="/quote" className="bg-gradient-to-r from-[#ff5987] to-[#ff3b6a] text-white px-6 py-2.5 rounded-full font-bold text-sm flex items-center gap-1.5 hover:shadow-[0_5px_15px_rgba(255,89,135,0.4)] transition-all duration-300 transform hover:-translate-y-0.5">
+          <button onClick={() => setIsModalOpen(true)} className="bg-gradient-to-r from-[#ff5987] to-[#ff3b6a] text-white px-6 py-2.5 rounded-full font-bold text-sm flex items-center gap-1.5 hover:shadow-[0_5px_15px_rgba(255,89,135,0.4)] transition-all duration-300 transform hover:-translate-y-0.5">
             Get a Quote <ArrowRight size={16} />
-          </Link>
+          </button>
         </div>
       </nav>
+
+      <QuoteModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 }
