@@ -40,7 +40,8 @@ export default function Home() {
   const testimonials = [
     { name: "Rajendra Deshmukh", role: "Managing Director, Deshmukh Agro Exports", tag: "CUSTOM ERP & WEB PLATFORM", location: "Nashik", quote: "Webiz Square engineered our global export portal and custom inventory ERP. Our export inquiries tripled within 60 days of launch, and the loading speed on international mobile networks is astounding." },
     { name: "Pooja Patil", role: "Founder & Creative Director, Sweet Affairs Confectioneries", tag: "E-COMMERCE & BRANDING", location: "Pune", quote: "The team at Webiz Square transformed our branding and e-commerce store. The dark aesthetic, fluid product transitions, and 1-click checkout increased our direct online revenue by over 240%." },
-    { name: "Vikram Mehta", role: "Operations Head, Polymer Crafts Manufacturing", tag: "ENTERPRISE ERP SOFTWARE", location: "Mumbai", quote: "We replaced our sluggish legacy software with Webiz Square One. The automated GST billing and real-time inventory tracking saved our accounts team over 25 hours every week. Highly recommended!" }
+    { name: "Vikram Mehta", role: "Operations Head, Polymer Crafts Manufacturing", tag: "ENTERPRISE ERP SOFTWARE", location: "Mumbai", quote: "We replaced our sluggish legacy software with Webiz Square One. The automated GST billing and real-time inventory tracking saved our accounts team over 25 hours every week. Highly recommended!" },
+    { name: "Anita Sharma", role: "CEO, TechFlow Innovations", tag: "MOBILE APP DEVELOPMENT", location: "Bangalore", quote: "The mobile app they built for us is incredibly smooth. The UX is top-notch, and our user retention increased by 45% in just the first quarter. Truly exceptional team to work with!" }
   ];
 
   const scrollSlider = (direction: 'left' | 'right') => {
@@ -215,12 +216,12 @@ export default function Home() {
           <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-gray-50 to-transparent z-10"></div>
           <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-gray-50 to-transparent z-10"></div>
           
-          <motion.div className="flex gap-6 items-center whitespace-nowrap cursor-default" animate={{ x: ["0%", "-50%"] }} transition={{ duration: 50, ease: "linear", repeat: Infinity }}>
+          <motion.div className="flex gap-8 items-center whitespace-nowrap cursor-default" animate={{ x: ["0%", "-50%"] }} transition={{ duration: 50, ease: "linear", repeat: Infinity }}>
             {[...Array(2)].map((_, i) => (
-              <div key={i} className="flex gap-6 items-center pr-6">
+              <div key={i} className="flex gap-8 items-center pr-8">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((num) => (
-                  <div key={num} className="w-[240px] h-[120px] bg-white border border-gray-100 rounded-2xl flex items-center justify-center p-2 opacity-100 transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105">
-                    <img src={`/${num}.png`} alt={`Brand ${num}`} className="max-w-full max-h-full object-contain scale-110 transition-all duration-300" />
+                  <div key={num} className="w-[150px] h-[150px] shrink-0 bg-white border border-gray-100 rounded-[1.5rem] flex items-center justify-center p-4 opacity-100 transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_15px_40px_rgba(255,89,135,0.08)] hover:-translate-y-1">
+                    <img src={`/${num}.png`} alt={`Brand ${num}`} className="w-[90%] h-[90%] object-contain transition-transform duration-300 hover:scale-110" />
                   </div>
                 ))}
               </div>
@@ -382,63 +383,65 @@ export default function Home() {
       </section>
 
       {/* 7. What Our Clients Say */}
-      <section className="py-24 px-6 bg-gray-50 overflow-hidden relative border-t border-gray-100">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#ff5987]/5 rounded-full blur-[100px] pointer-events-none" />
-        
+      <section className="py-24 px-6 bg-[#fff5f7] overflow-hidden relative">
         <div className="text-center mb-16 relative z-10">
           <h2 className="text-4xl md:text-5xl font-bold text-black">What Our <span className="text-[#ff5987]">Clients Say</span></h2>
         </div>
         
-        <div className="max-w-[1400px] mx-auto overflow-hidden relative z-10 px-4">
-          <div className="flex gap-6 md:gap-8 overflow-x-auto snap-x snap-mandatory pb-12 pt-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] scroll-smooth">
+        <div className="max-w-[1400px] mx-auto overflow-hidden relative z-10 px-4 group">
+          <div ref={sliderRef} className="flex gap-6 md:gap-8 overflow-x-auto snap-x snap-mandatory pb-12 pt-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] scroll-smooth">
             {testimonials.map((test, i) => (
-              <div key={i} className="w-[90vw] md:w-[400px] lg:w-[450px] shrink-0 snap-center bg-white border border-gray-100 rounded-3xl p-8 lg:p-10 shadow-[0_10px_40px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(255,89,135,0.1)] transition-all duration-300 flex flex-col">
+              <div key={i} className="w-[90vw] md:w-[400px] lg:w-[450px] shrink-0 snap-center bg-white rounded-[2rem] p-8 lg:p-10 shadow-[0_15px_40px_rgba(255,89,135,0.08)] transition-all duration-300 flex flex-col relative z-20">
                 {/* Top Row: Stars and Tag */}
                 <div className="flex justify-between items-start mb-8 gap-4 flex-wrap">
                   <div className="flex gap-1 text-yellow-400">
                     {[1,2,3,4,5].map(star => <Star key={star} size={18} fill="currentColor" />)}
                   </div>
-                  <div className="px-4 py-1.5 rounded-full border border-[#ff5987] bg-[#ff5987]/10 text-[#ff5987] text-[10px] font-bold tracking-wider uppercase whitespace-nowrap">
+                  <div className="px-3 py-1 rounded-full border border-[#ff5987]/40 text-[#ff5987] bg-transparent text-[9px] font-bold tracking-widest uppercase whitespace-nowrap">
                     {test.tag}
                   </div>
                 </div>
 
                 {/* Quote */}
                 <div className="flex-grow mb-10 relative">
-                  <Quote className="absolute -top-4 -left-4 text-[#ff5987] opacity-10" size={60} />
-                  <p className="text-gray-700 italic leading-relaxed text-[17px] relative z-10">
+                  <Quote className="absolute -top-6 -left-6 text-[#ff5987] opacity-10" size={80} fill="none" strokeWidth={1} />
+                  <p className="text-gray-700 italic leading-relaxed text-[15px] relative z-10">
                     "{test.quote}"
                   </p>
                 </div>
 
-                {/* Divider & Footer */}
-                <div className="pt-6 border-t border-gray-100 flex justify-between items-end gap-4 mt-auto">
+                {/* Footer (No Divider) */}
+                <div className="flex justify-between items-end gap-4 mt-auto">
                   <div>
-                    <h4 className="text-black font-bold text-lg flex items-center gap-1.5 mb-1">
-                      {test.name} <BadgeCheck size={18} className="text-emerald-500" />
+                    <h4 className="text-black font-bold text-[17px] flex items-center gap-1.5 mb-1">
+                      {test.name} <BadgeCheck size={16} className="text-emerald-500" />
                     </h4>
-                    <p className="text-sm text-gray-500 leading-snug max-w-[200px]">
+                    <p className="text-[11px] text-gray-500 leading-snug max-w-[200px]">
                       {test.role}
                     </p>
                   </div>
                   <div className="flex items-center gap-1 text-gray-400">
-                    <MapPin size={16} />
-                    <span className="text-sm font-medium">{test.location}</span>
+                    <MapPin size={14} />
+                    <span className="text-[11px] font-medium">{test.location}</span>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-        </div>
-        
-        {/* Pagination Dots (Visual only since it's a grid now) */}
-        <div className="flex justify-center items-center gap-2 mt-16 relative z-10">
-           <div className="w-8 h-2.5 rounded-full bg-[#ff5987]"></div>
-           <div className="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
-           <div className="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
-           <div className="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
-           <div className="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
-           <div className="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
+
+          {/* Navigation Arrows */}
+          <button 
+            onClick={() => scrollSlider('left')} 
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:translate-x-2 w-12 h-12 rounded-full bg-white border border-gray-100 shadow-[0_10px_20px_rgba(0,0,0,0.1)] flex items-center justify-center text-black hover:bg-[#ff5987] hover:text-white transition-all opacity-0 group-hover:opacity-100 z-30 hidden md:flex"
+          >
+            <ChevronLeft size={24} className="mr-0.5" />
+          </button>
+          <button 
+            onClick={() => scrollSlider('right')} 
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:-translate-x-2 w-12 h-12 rounded-full bg-white border border-gray-100 shadow-[0_10px_20px_rgba(0,0,0,0.1)] flex items-center justify-center text-black hover:bg-[#ff5987] hover:text-white transition-all opacity-0 group-hover:opacity-100 z-30 hidden md:flex"
+          >
+            <ChevronRight size={24} className="ml-0.5" />
+          </button>
         </div>
       </section>
       {/* 8. Frequently Asked Questions */}
