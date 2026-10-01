@@ -2,18 +2,45 @@
 
 import { useEffect, useState, useRef } from "react";
 import { motion } from "motion/react";
-import { ArrowRight, Code, Smartphone, Globe, Sparkles, ChevronRight, ChevronLeft, Zap, Shield, Star, CheckCircle, Quote, PenTool, Share2, Search, BarChart, Bot, ArrowUpRight } from "lucide-react";
+import { ArrowRight, Code, Smartphone, Globe, Sparkles, ChevronRight, ChevronLeft, ChevronDown, Zap, Shield, Star, CheckCircle, Quote, PenTool, Share2, Search, BarChart, Bot, ArrowUpRight, MapPin, BadgeCheck } from "lucide-react";
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [activeAboutTab, setActiveAboutTab] = useState(0);
   const sliderRef = useRef<HTMLDivElement>(null);
 
+  const aboutTabs = [
+    {
+      title: "Our Vision",
+      heading: "Expert Team",
+      desc: "Our dedicated team has the skills and experience to deliver cutting-edge solutions. We combine creative design with robust engineering to ensure your project not only looks great but performs flawlessly.",
+      img: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop"
+    },
+    {
+      title: "Our Mission",
+      heading: "Empowering Growth",
+      desc: "We exist to help businesses scale globally through highly optimized, conversion-focused digital platforms. We transform complex problems into intuitive, user-friendly solutions.",
+      img: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=800&auto=format&fit=crop"
+    },
+    {
+      title: "Our Approach",
+      heading: "Agile & Data-Driven",
+      desc: "We don't just guess; we use analytics, heatmaps, and A/B testing to drive design and development decisions. Our agile methodology ensures continuous delivery and complete transparency.",
+      img: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=800&auto=format&fit=crop"
+    },
+    {
+      title: "Core Values",
+      heading: "Integrity & Innovation",
+      desc: "We believe in honest communication, writing exceptionally clean code, and pushing the boundaries of what is digitally possible. Our code is as beautiful as our designs.",
+      img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=800&auto=format&fit=crop"
+    }
+  ];
+
   const testimonials = [
-    { name: "Priya Sharma", role: "CEO, TechCorp", img: "10", quote: "Webiz Square completely transformed our digital presence. Their attention to detail, modern design approach, and robust engineering resulted in a website that not only looks beautiful but performs exceptionally well. Our inbound leads have tripled." },
-    { name: "David Chen", role: "Founder, GrowthX", img: "12", quote: "The speed and performance they delivered are unmatched. We saw a 40% increase in conversions within the first month. The team is incredibly responsive and proactive." },
-    { name: "Sarah Jenkins", role: "Marketing Director", img: "14", quote: "They didn't just build a website, they built a scalable lead generation machine for us. The backend dashboard is intuitive, and the front end is an absolute work of art." },
-    { name: "Rahul Verma", role: "Operations Head", img: "16", quote: "Highly recommend Webiz Square for enterprise-level projects. They handled our complex backend integration flawlessly while keeping the frontend lightning fast." }
+    { name: "Rajendra Deshmukh", role: "Managing Director, Deshmukh Agro Exports", tag: "CUSTOM ERP & WEB PLATFORM", location: "Nashik", quote: "Webiz Square engineered our global export portal and custom inventory ERP. Our export inquiries tripled within 60 days of launch, and the loading speed on international mobile networks is astounding." },
+    { name: "Pooja Patil", role: "Founder & Creative Director, Sweet Affairs Confectioneries", tag: "E-COMMERCE & BRANDING", location: "Pune", quote: "The team at Webiz Square transformed our branding and e-commerce store. The dark aesthetic, fluid product transitions, and 1-click checkout increased our direct online revenue by over 240%." },
+    { name: "Vikram Mehta", role: "Operations Head, Polymer Crafts Manufacturing", tag: "ENTERPRISE ERP SOFTWARE", location: "Mumbai", quote: "We replaced our sluggish legacy software with Webiz Square One. The automated GST billing and real-time inventory tracking saved our accounts team over 25 hours every week. Highly recommended!" }
   ];
 
   const scrollSlider = (direction: 'left' | 'right') => {
@@ -119,31 +146,45 @@ export default function Home() {
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             {/* Left Tabs */}
             <div className="lg:col-span-4 flex flex-col gap-4">
-              <div className="p-5 rounded-2xl bg-[#ff5987] text-white font-bold flex justify-between items-center shadow-[0_5px_15px_rgba(255,89,135,0.3)] cursor-pointer transition-transform hover:-translate-y-1">
-                <span className="text-lg">Our Vision</span> <CheckCircle size={22} />
-              </div>
-              {['Our Mission', 'Our Approach', 'Core Values'].map((tab, i) => (
-                <div key={i} className="p-5 rounded-2xl bg-white border border-gray-200 text-gray-700 font-bold flex justify-between items-center cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm">
-                  <span className="text-lg">{tab}</span> <ArrowRight size={20} className="text-gray-400" />
+              {aboutTabs.map((tab, i) => (
+                <div 
+                  key={i} 
+                  onClick={() => setActiveAboutTab(i)}
+                  className={`p-5 rounded-2xl font-bold flex justify-between items-center cursor-pointer transition-all shadow-sm ${activeAboutTab === i ? 'bg-[#ff5987] text-white shadow-[0_5px_15px_rgba(255,89,135,0.3)] transform hover:-translate-y-1' : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300'}`}
+                >
+                  <span className="text-lg">{tab.title}</span> 
+                  {activeAboutTab === i ? <CheckCircle size={22} /> : <ArrowRight size={20} className="text-gray-400" />}
                 </div>
               ))}
             </div>
 
             {/* Right Content */}
             <div className="lg:col-span-8 flex flex-col gap-8">
-               <div className="flex flex-col md:flex-row gap-8 bg-black p-8 rounded-[2rem] border border-gray-800 shadow-xl items-center">
-                 <div className="flex-1">
-                   <h3 className="text-2xl font-bold mb-4 text-white">Expert Team</h3>
+               <div className="flex flex-col md:flex-row gap-8 bg-black p-8 rounded-[2rem] border border-gray-800 shadow-xl items-center relative overflow-hidden min-h-[300px]">
+                 <motion.div 
+                   key={activeAboutTab}
+                   initial={{ opacity: 0, x: 20 }}
+                   animate={{ opacity: 1, x: 0 }}
+                   transition={{ duration: 0.4 }}
+                   className="flex-1 z-10"
+                 >
+                   <h3 className="text-2xl font-bold mb-4 text-white">{aboutTabs[activeAboutTab].heading}</h3>
                    <p className="text-gray-400 text-sm leading-relaxed mb-6">
-                     Our dedicated team has the skills and experience to deliver cutting-edge solutions. We combine creative design with robust engineering to ensure your project not only looks great but performs flawlessly.
+                     {aboutTabs[activeAboutTab].desc}
                    </p>
                    <button className="text-[#ff5987] text-sm font-bold flex items-center gap-2 hover:gap-3 transition-all">
                      Get Free Consultation <ArrowRight size={16}/>
                    </button>
-                 </div>
-                 <div className="flex-1 w-full h-full">
-                   <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop" className="w-full h-48 md:h-full object-cover rounded-2xl" alt="Team" />
-                 </div>
+                 </motion.div>
+                 <motion.div 
+                   key={`img-${activeAboutTab}`}
+                   initial={{ opacity: 0, scale: 0.95 }}
+                   animate={{ opacity: 1, scale: 1 }}
+                   transition={{ duration: 0.4 }}
+                   className="flex-1 w-full h-full z-10"
+                 >
+                   <img src={aboutTabs[activeAboutTab].img} className="w-full h-48 md:h-full object-cover rounded-2xl" alt="Team" />
+                 </motion.div>
                </div>
                
                {/* Stat Cards */}
@@ -341,42 +382,112 @@ export default function Home() {
       </section>
 
       {/* 7. What Our Clients Say */}
-      <section className="py-32 px-6 bg-white">
-        <div className="text-center mb-16">
+      <section className="py-24 px-6 bg-gray-50 overflow-hidden relative border-t border-gray-100">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#ff5987]/5 rounded-full blur-[100px] pointer-events-none" />
+        
+        <div className="text-center mb-16 relative z-10">
           <h2 className="text-4xl md:text-5xl font-bold text-black">What Our <span className="text-[#ff5987]">Clients Say</span></h2>
         </div>
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row gap-8 items-center">
-          <div className="flex md:flex-col gap-4">
-             {testimonials.map((test, i) => (
-               <img 
-                 key={i} 
-                 src={`https://i.pravatar.cc/150?img=${test.img}`} 
-                 className={`w-16 h-16 rounded-full border-4 shadow-sm cursor-pointer transition-all hover:scale-105 ${activeTestimonial === i ? 'border-[#ff5987] scale-110' : 'border-gray-100 hover:border-[#ff5987]/50'}`} 
-                 alt={test.name}
-                 onClick={() => setActiveTestimonial(i)}
-               />
-             ))}
+        
+        <div className="max-w-[1400px] mx-auto overflow-hidden relative z-10 px-4">
+          <div className="flex gap-6 md:gap-8 overflow-x-auto snap-x snap-mandatory pb-12 pt-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] scroll-smooth">
+            {testimonials.map((test, i) => (
+              <div key={i} className="w-[90vw] md:w-[400px] lg:w-[450px] shrink-0 snap-center bg-white border border-gray-100 rounded-3xl p-8 lg:p-10 shadow-[0_10px_40px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(255,89,135,0.1)] transition-all duration-300 flex flex-col">
+                {/* Top Row: Stars and Tag */}
+                <div className="flex justify-between items-start mb-8 gap-4 flex-wrap">
+                  <div className="flex gap-1 text-yellow-400">
+                    {[1,2,3,4,5].map(star => <Star key={star} size={18} fill="currentColor" />)}
+                  </div>
+                  <div className="px-4 py-1.5 rounded-full border border-[#ff5987] bg-[#ff5987]/10 text-[#ff5987] text-[10px] font-bold tracking-wider uppercase whitespace-nowrap">
+                    {test.tag}
+                  </div>
+                </div>
+
+                {/* Quote */}
+                <div className="flex-grow mb-10 relative">
+                  <Quote className="absolute -top-4 -left-4 text-[#ff5987] opacity-10" size={60} />
+                  <p className="text-gray-700 italic leading-relaxed text-[17px] relative z-10">
+                    "{test.quote}"
+                  </p>
+                </div>
+
+                {/* Divider & Footer */}
+                <div className="pt-6 border-t border-gray-100 flex justify-between items-end gap-4 mt-auto">
+                  <div>
+                    <h4 className="text-black font-bold text-lg flex items-center gap-1.5 mb-1">
+                      {test.name} <BadgeCheck size={18} className="text-emerald-500" />
+                    </h4>
+                    <p className="text-sm text-gray-500 leading-snug max-w-[200px]">
+                      {test.role}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-1 text-gray-400">
+                    <MapPin size={16} />
+                    <span className="text-sm font-medium">{test.location}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
-          <div className="flex-1 bg-white border border-gray-100 p-10 md:p-16 rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)] relative min-h-[300px] flex flex-col justify-center overflow-hidden group">
-            <Quote className="absolute top-10 right-10 text-[#ff5987] opacity-10" size={80} />
-            <motion.div
-              key={activeTestimonial}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-              className="relative z-10"
-            >
-              <h3 className="text-2xl font-bold mb-1 text-black">{testimonials[activeTestimonial].name}</h3>
-              <p className="text-sm font-semibold text-[#ff5987] mb-6 uppercase tracking-wider">{testimonials[activeTestimonial].role}</p>
-              <p className="text-xl text-gray-600 italic leading-relaxed relative z-10">
-                "{testimonials[activeTestimonial].quote}"
-              </p>
-            </motion.div>
+        </div>
+        
+        {/* Pagination Dots (Visual only since it's a grid now) */}
+        <div className="flex justify-center items-center gap-2 mt-16 relative z-10">
+           <div className="w-8 h-2.5 rounded-full bg-[#ff5987]"></div>
+           <div className="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
+           <div className="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
+           <div className="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
+           <div className="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
+           <div className="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
+        </div>
+      </section>
+      {/* 8. Frequently Asked Questions */}
+      <section className="py-24 px-6 bg-white relative border-t border-gray-100">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-black">Frequently Asked <span className="text-[#ff5987]">Questions</span></h2>
+          </div>
+          
+          <div className="space-y-4">
+            {[
+              {
+                q: "How long does it take to develop a custom website or software?",
+                a: "A standard high-performance marketing website or e-commerce storefront typically takes 2 to 4 weeks. Custom enterprise ERP software or multi-module applications take between 4 to 8 weeks depending on scope and integrations. We operate in bi-weekly agile sprints so you see tangible progress every week."
+              },
+              {
+                q: "Why should we choose Next.js and custom code over WordPress or page builders?",
+                a: "Custom code with Next.js provides unmatched loading speeds, perfect technical SEO, and complete design freedom. Unlike WordPress, it won't break when plugins update, and it offers enterprise-level security out of the box."
+              },
+              {
+                q: "Can we manage content and updates without coding knowledge?",
+                a: "Yes! We integrate modern headless Content Management Systems (like Sanity, Builder.io, or Strapi) so your marketing team can easily edit text, swap images, and publish blog posts without writing a single line of code."
+              },
+              {
+                q: "How do you handle website migration from our existing site without losing SEO rankings?",
+                a: "We perform a comprehensive SEO audit before migration. We map all your existing URLs, implement proper 301 redirects, migrate meta tags, and ensure the new architecture strictly adheres to Google's Core Web Vitals for a seamless transition."
+              },
+              {
+                q: "Do you provide post-launch support and maintenance?",
+                a: "Absolutely. We offer dedicated monthly retainers to handle everything from software updates, security patches, new feature development, and server monitoring to ensure your digital platform scales safely alongside your business."
+              }
+            ].map((faq, i) => (
+              <details key={i} className="group bg-white border border-gray-100 shadow-[0_5px_15px_rgba(0,0,0,0.03)] hover:shadow-[0_15px_30px_rgba(255,89,135,0.08)] rounded-[1.25rem] [&_summary::-webkit-details-marker]:hidden transition-all duration-300">
+                <summary className="flex items-center justify-between p-6 md:p-8 cursor-pointer list-none font-bold text-lg text-black hover:text-[#ff5987] transition-colors">
+                  {faq.q}
+                  <span className="transition-all duration-300 group-open:-rotate-180 bg-gray-50 group-open:bg-[#ff5987]/10 p-2 rounded-full text-gray-400 group-open:text-[#ff5987]">
+                    <ChevronDown size={18} strokeWidth={2.5} />
+                  </span>
+                </summary>
+                <div className="px-6 md:px-8 pb-6 md:pb-8 text-gray-600 leading-relaxed border-t border-gray-50 pt-6 text-[15px]">
+                  {faq.a}
+                </div>
+              </details>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* 8. Ready to Transform (Contact) */}
+      {/* 9. Ready to Transform (Contact) */}
       <section className="py-24 px-6 bg-gray-50 border-t border-gray-200 relative overflow-hidden">
         <div className="absolute right-0 bottom-0 w-[500px] h-[500px] bg-[#ff5987] rounded-full blur-[150px] opacity-10 pointer-events-none" />
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10">
