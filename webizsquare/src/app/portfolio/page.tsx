@@ -74,11 +74,11 @@ export default function PortfolioPage() {
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-200 bg-gray-50 text-gray-600 text-xs font-bold tracking-widest uppercase mb-8 shadow-sm">
             <Sparkles size={12} className="text-[#ff5987]" /> PROVEN TRACK RECORD
           </div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight leading-tight max-w-4xl mx-auto">
-            Featured Case Studies &<br/> Engineered <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff5987] to-[#ff8dae]">Digital Products</span>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight leading-tight max-w-4xl mx-auto text-black">
+            Transformative <span className="text-[#ff5987]">Success</span>
           </h1>
           <p className="text-gray-600 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-            Explore a curated selection of our high-conversion websites, enterprise platforms, brand identities, and packaging systems.
+            Discover how our bespoke strategies brought victory to our clients.
           </p>
         </div>
 
@@ -107,42 +107,27 @@ export default function PortfolioPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
-              className="bg-white border border-gray-200 rounded-3xl overflow-hidden group hover:border-[#ff5987]/30 transition-all duration-500 shadow-sm hover:shadow-2xl hover:shadow-[#ff5987]/10"
+              className="bg-white border border-gray-100 rounded-3xl overflow-hidden group hover:border-[#ff5987]/30 transition-all duration-500 shadow-[0_10px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(255,89,135,0.12)] flex flex-col"
             >
-              {/* Image Header */}
-              <div className="relative h-64 overflow-hidden bg-gray-50 p-4 flex items-center justify-center border-b border-gray-100">
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-100/80 via-transparent to-transparent z-10"></div>
-                
-                {/* Badges */}
-                <div className="absolute top-5 left-5 z-20 bg-white/90 backdrop-blur-md px-3 py-1.5 text-[9px] font-bold uppercase rounded-full border border-gray-200 text-gray-700 tracking-wider shadow-sm">
-                  {project.category}
-                </div>
-                <div className="absolute top-5 right-5 z-20 bg-[#ff5987] px-3 py-1.5 text-[10px] font-bold text-white rounded-full shadow-[0_5px_15px_rgba(255,89,135,0.4)]">
-                  {project.stat}
-                </div>
-                
-                {/* Mockup visual representation */}
-                <div className="w-[90%] h-48 bg-white rounded-xl border border-gray-200 overflow-hidden relative z-0 group-hover:scale-105 transition-transform duration-700 shadow-lg">
-                  <img src={project.image} className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" alt={project.title} />
-                  {/* Subtle laptop frame mock overlay effect */}
-                  <div className="absolute top-0 w-full h-4 bg-gray-100 border-b border-gray-200 flex items-center px-2 gap-1">
-                    <div className="w-1.5 h-1.5 rounded-full bg-red-400"></div>
-                    <div className="w-1.5 h-1.5 rounded-full bg-yellow-400"></div>
-                    <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
+              <div className="p-4 pb-0">
+                <div className="relative h-64 overflow-hidden rounded-2xl bg-gray-100 flex items-center justify-center">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent z-10"></div>
+                  <div className="absolute top-4 left-4 z-20 bg-white px-3 py-1.5 text-[9px] font-bold uppercase rounded-full shadow-sm text-gray-700 tracking-wider">
+                    {project.category}
                   </div>
+                  <div className="absolute top-4 right-4 z-20 bg-[#ff5987] px-3 py-1.5 text-[9px] font-bold text-white rounded-full shadow-[0_5px_15px_rgba(255,89,135,0.4)]">
+                    {project.stat}
+                  </div>
+                  <img src={project.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt={project.title} />
                 </div>
               </div>
-              
-              {/* Content Body */}
-              <div className="p-8 pt-6 relative z-20 bg-white">
-                <p className="text-xs font-bold text-gray-400 mb-2 uppercase tracking-wide">{project.client}</p>
-                <h3 className="text-xl font-bold mb-4 text-black group-hover:text-[#ff5987] transition-colors">{project.title}</h3>
-                <p className="text-sm text-gray-600 leading-relaxed mb-8 line-clamp-3">{project.desc}</p>
-                
-                {/* Tech Tags */}
-                <div className="flex flex-wrap gap-2">
+              <div className="p-6 relative z-20 bg-white flex-grow flex flex-col">
+                <p className="text-[11px] font-bold text-gray-400 mb-1.5 tracking-wide uppercase">{project.client}</p>
+                <h3 className="text-xl font-black mb-3 text-black group-hover:text-[#ff5987] transition-colors leading-tight line-clamp-2">{project.title}</h3>
+                <p className="text-sm text-gray-500 leading-relaxed mb-6 line-clamp-3">{project.desc}</p>
+                <div className="flex flex-wrap gap-2 mt-auto">
                   {project.tags.map((t, i) => (
-                    <span key={i} className={`text-[10px] font-bold px-3 py-1.5 rounded-lg ${t.startsWith('+') ? 'bg-[#ff5987]/10 text-[#ff5987]' : 'bg-gray-50 border border-gray-200 text-gray-600'}`}>
+                    <span key={i} className={`text-[10px] font-bold px-3 py-1.5 rounded-lg ${t.startsWith('+') ? 'bg-[#ff5987]/10 text-[#ff5987]' : 'bg-gray-50 border border-gray-100 text-gray-600'}`}>
                       {t}
                     </span>
                   ))}

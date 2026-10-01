@@ -3,12 +3,21 @@
 import { useEffect, useState, useRef } from "react";
 import { motion } from "motion/react";
 import { ArrowRight, Code, Smartphone, Globe, Sparkles, ChevronRight, ChevronLeft, ChevronDown, Zap, Shield, Star, CheckCircle, Quote, PenTool, Share2, Search, BarChart, Bot, ArrowUpRight, MapPin, BadgeCheck } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [activeAboutTab, setActiveAboutTab] = useState(0);
   const sliderRef = useRef<HTMLDivElement>(null);
+  const projectSliderRef = useRef<HTMLDivElement>(null);
+
+  const scrollProjectSlider = (direction: 'left' | 'right') => {
+    if (projectSliderRef.current) {
+      const scrollAmount = direction === 'left' ? -480 : 480;
+      projectSliderRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
 
   const aboutTabs = [
     {
@@ -266,96 +275,102 @@ export default function Home() {
             <p className="text-gray-600">Discover how our bespoke strategies brought victory to our clients.</p>
           </div>
           
-          {/* Navigation Arrows Removed for Continuous Slide */}
+          <div className="flex items-center gap-4">
+             <Link href="/portfolio" className="px-6 py-3 bg-white border border-gray-200 hover:border-[#ff5987] hover:text-[#ff5987] rounded-full font-bold text-black flex items-center gap-2 transition-all shadow-sm hover:shadow-md">
+               Explore Portfolio <ArrowUpRight size={18} />
+             </Link>
+          </div>
         </div>
         
-        {/* Continuous Horizontal Scroll Container */}
-        <div className="w-full flex overflow-hidden relative pb-12 group">
-          <motion.div 
-            className="flex gap-8 items-stretch"
-            animate={{ x: ["0%", "-50%"] }} 
-            transition={{ duration: 60, ease: "linear", repeat: Infinity }}
-            whileHover={{ animationPlayState: "paused" }} // Optional: pausing on hover isn't directly supported by animate prop in this way without custom controls, but we'll let it scroll continuously
-          >
-            {[...Array(2)].map((_, arrayIndex) => (
-              <div key={arrayIndex} className="flex gap-8 items-stretch pr-8">
-                {[
-                  {
-                    category: "Web & E-Commerce", stat: "+280% GMV Growth", client: "EasyVendor Global",
-                    title: "EasyVendor B2B Multi-Vendor Platform",
-                    desc: "Enterprise multi-vendor procurement and wholesale marketplace with automated vendor settlements, real-time inventory syncing, and B2B pricing tiers.",
-                    tags: ["Next.js", "React", "PostgreSQL", "+2"],
-                    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop"
-                  },
-                  {
-                    category: "E-Commerce", stat: "1.1s Load Time", client: "EGR59 Foods Pvt Ltd",
-                    title: "EGR59 Gourmet Food Showcase & Shop",
-                    desc: "Ultra-fast headless food ordering experience with live kitchen dispatch tracking, recipe discovery, and international logistics integration.",
-                    tags: ["Next.js App Router", "Stripe / Razorpay", "Tailwind", "+1"],
-                    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=800&auto=format&fit=crop"
-                  },
-                  {
-                    category: "Digital Experience", stat: "45k+ Monthly Visitors", client: "Eternal Devalaya Trust",
-                    title: "Eternal Devalaya Cultural Portal",
-                    desc: "Immersive spiritual and cultural heritage portal with 3D temple walkthrough previews, live donation processing, and multi-lingual support.",
-                    tags: ["React", "Next.js", "Cloudflare CDN", "+1"],
-                    image: "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?q=80&w=800&auto=format&fit=crop"
-                  },
-                  {
-                    category: "Brand & E-Commerce", stat: "4.8x ROI on Ads", client: "The Avocado Co.",
-                    title: "The Avo Company DTC Superfood Site",
-                    desc: "Direct to consumer e-commerce experience highlighting sustainable farming and organic avocado products with a modern, earthy aesthetic.",
-                    tags: ["Next.js", "React", "PostgreSQL", "+2"],
-                    image: "https://images.unsplash.com/photo-1512314889357-e157c22f938d?q=80&w=800&auto=format&fit=crop"
-                  },
-                  {
-                    category: "Service Platform", stat: "+190% Lead Inquiries", client: "Mech Moto Automotives",
-                    title: "Mech Moto Automotive Service Hub",
-                    desc: "Digital service booking platform for premium automotive care with real-time mechanic tracking and automated service reminders.",
-                    tags: ["Next.js App Router", "Stripe / Razorpay", "Tailwind", "+1"],
-                    image: "https://images.unsplash.com/photo-1503375894024-426b3a3c9b68?q=80&w=800&auto=format&fit=crop"
-                  },
-                  {
-                    category: "Industrial Web", stat: "Top 3 Google Ranking", client: "Polymer Crafts Inc.",
-                    title: "Polymer Crafts Industrial Showcase",
-                    desc: "B2B manufacturing catalogue with advanced technical specifications filtering and international bulk quote request system.",
-                    tags: ["React", "Next.js", "Cloudflare CDN", "+1"],
-                    image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=800&auto=format&fit=crop"
-                  }
-                ].map((project, idx) => (
-                  <div key={idx} className="w-[320px] md:w-[400px] shrink-0 bg-white border border-gray-100 rounded-3xl overflow-hidden group hover:border-[#ff5987]/30 transition-all duration-500 shadow-lg hover:shadow-2xl">
-                    <div className="relative h-56 overflow-hidden bg-gray-100 p-4 flex items-center justify-center">
-                      <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-10"></div>
-                      <div className="absolute top-4 left-4 z-20 bg-white/90 backdrop-blur-md px-2 py-1 text-[8px] font-bold uppercase rounded-full border border-gray-200 text-gray-600 shadow-sm">
-                        {project.category}
-                      </div>
-                      <div className="absolute top-4 right-4 z-20 bg-[#ff5987] px-2 py-1 text-[9px] font-bold text-white rounded-full shadow-[0_5px_15px_rgba(255,89,135,0.4)]">
-                        {project.stat}
-                      </div>
-                      <div className="w-[90%] h-40 bg-white rounded-xl border border-gray-200 overflow-hidden relative z-0 group-hover:scale-105 transition-transform duration-700 shadow-lg">
-                        <img src={project.image} className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" alt={project.title} />
-                        <div className="absolute top-0 w-full h-3 bg-white/80 backdrop-blur-sm border-b border-gray-200 flex items-center px-1.5 gap-1">
-                          <div className="w-1 h-1 rounded-full bg-red-400"></div><div className="w-1 h-1 rounded-full bg-yellow-400"></div><div className="w-1 h-1 rounded-full bg-green-400"></div>
-                        </div>
-                      </div>
+        {/* Interactive Slider Container */}
+        <div className="max-w-[1400px] mx-auto overflow-hidden relative pb-12 group px-4">
+          <div ref={projectSliderRef} className="flex gap-6 md:gap-8 overflow-x-auto snap-x snap-mandatory pb-12 pt-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] scroll-smooth">
+            {[
+              {
+                category: "Web & E-Commerce", stat: "+280% GMV Growth", client: "EasyVendor Global",
+                title: "EasyVendor B2B Multi-Vendor Platform",
+                desc: "Enterprise multi-vendor procurement and wholesale marketplace with automated vendor settlements, real-time inventory syncing, and B2B pricing tiers.",
+                tags: ["Next.js", "React", "PostgreSQL", "+2"],
+                image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop"
+              },
+              {
+                category: "E-Commerce", stat: "1.1s Load Time", client: "EGR59 Foods Pvt Ltd",
+                title: "EGR59 Gourmet Food Showcase & Shop",
+                desc: "Ultra-fast headless food ordering experience with live kitchen dispatch tracking, recipe discovery, and international logistics integration.",
+                tags: ["Next.js App Router", "Stripe / Razorpay", "Tailwind", "+1"],
+                image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=800&auto=format&fit=crop"
+              },
+              {
+                category: "Digital Experience", stat: "45k+ Monthly Visitors", client: "Eternal Devalaya Trust",
+                title: "Eternal Devalaya Cultural Portal",
+                desc: "Immersive spiritual and cultural heritage portal with 3D temple walkthrough previews, live donation processing, and multi-lingual support.",
+                tags: ["React", "Next.js", "Cloudflare CDN", "+1"],
+                image: "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?q=80&w=800&auto=format&fit=crop"
+              },
+              {
+                category: "Brand & E-Commerce", stat: "4.8x ROI on Ads", client: "The Avocado Co.",
+                title: "The Avo Company DTC Superfood Site",
+                desc: "Direct to consumer e-commerce experience highlighting sustainable farming and organic avocado products with a modern, earthy aesthetic.",
+                tags: ["Next.js", "React", "PostgreSQL", "+2"],
+                image: "https://images.unsplash.com/photo-1512314889357-e157c22f938d?q=80&w=800&auto=format&fit=crop"
+              },
+              {
+                category: "Service Platform", stat: "+190% Lead Inquiries", client: "Mech Moto Automotives",
+                title: "Mech Moto Automotive Service Hub",
+                desc: "Digital service booking platform for premium automotive care with real-time mechanic tracking and automated service reminders.",
+                tags: ["Next.js App Router", "Stripe / Razorpay", "Tailwind", "+1"],
+                image: "https://images.unsplash.com/photo-1503375894024-426b3a3c9b68?q=80&w=800&auto=format&fit=crop"
+              },
+              {
+                category: "Industrial Web", stat: "Top 3 Google Ranking", client: "Polymer Crafts Inc.",
+                title: "Polymer Crafts Industrial Showcase",
+                desc: "B2B manufacturing catalogue with advanced technical specifications filtering and international bulk quote request system.",
+                tags: ["React", "Next.js", "Cloudflare CDN", "+1"],
+                image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=800&auto=format&fit=crop"
+              }
+            ].map((project, idx) => (
+              <div key={idx} className="w-[85vw] md:w-[450px] lg:w-[480px] shrink-0 snap-center bg-white border border-gray-100 rounded-3xl overflow-hidden group hover:border-[#ff5987]/30 transition-all duration-500 shadow-[0_10px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(255,89,135,0.12)]">
+                <div className="p-4 pb-0">
+                  <div className="relative h-64 overflow-hidden rounded-2xl bg-gray-100 flex items-center justify-center">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent z-10"></div>
+                    <div className="absolute top-4 left-4 z-20 bg-white px-3 py-1.5 text-[9px] font-bold uppercase rounded-full shadow-sm text-gray-700">
+                      {project.category}
                     </div>
-                    <div className="p-6 pt-4 relative z-20">
-                      <p className="text-[10px] font-medium text-gray-400 mb-1.5">{project.client}</p>
-                      <h3 className="text-lg font-bold mb-3 text-black group-hover:text-[#ff5987] transition-colors leading-tight line-clamp-1">{project.title}</h3>
-                      <p className="text-xs text-gray-500 leading-relaxed mb-6 line-clamp-2">{project.desc}</p>
-                      <div className="flex flex-wrap gap-1.5">
-                        {project.tags.map((t, i) => (
-                          <span key={i} className={`text-[8px] font-bold px-2 py-1 rounded-md ${t.startsWith('+') ? 'bg-[#ff5987]/10 text-[#ff5987]' : 'bg-gray-50 border border-gray-200 text-gray-600'}`}>
-                            {t}
-                          </span>
-                        ))}
-                      </div>
+                    <div className="absolute top-4 right-4 z-20 bg-[#ff5987] px-3 py-1.5 text-[9px] font-bold text-white rounded-full shadow-[0_5px_15px_rgba(255,89,135,0.4)]">
+                      {project.stat}
                     </div>
+                    <img src={project.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt={project.title} />
                   </div>
-                ))}
+                </div>
+                <div className="p-6 relative z-20">
+                  <p className="text-[11px] font-bold text-gray-400 mb-1.5 tracking-wide">{project.client}</p>
+                  <h3 className="text-xl font-black mb-3 text-black group-hover:text-[#ff5987] transition-colors leading-tight line-clamp-1">{project.title}</h3>
+                  <p className="text-sm text-gray-500 leading-relaxed mb-6 line-clamp-2">{project.desc}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map((t, i) => (
+                      <span key={i} className={`text-[10px] font-bold px-3 py-1.5 rounded-lg ${t.startsWith('+') ? 'bg-[#ff5987]/10 text-[#ff5987]' : 'bg-gray-50 border border-gray-100 text-gray-600'}`}>
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
             ))}
-          </motion.div>
+          </div>
+          
+          {/* Navigation Arrows */}
+          <button 
+            onClick={() => scrollProjectSlider('left')} 
+            className="absolute left-0 top-[40%] -translate-y-1/2 -translate-x-4 md:translate-x-4 w-14 h-14 rounded-full bg-white border border-gray-100 shadow-[0_10px_30px_rgba(0,0,0,0.1)] flex items-center justify-center text-black hover:bg-[#ff5987] hover:text-white transition-all opacity-0 group-hover:opacity-100 z-30 hidden md:flex"
+          >
+            <ChevronLeft size={28} className="mr-0.5" />
+          </button>
+          <button 
+            onClick={() => scrollProjectSlider('right')} 
+            className="absolute right-0 top-[40%] -translate-y-1/2 translate-x-4 md:-translate-x-4 w-14 h-14 rounded-full bg-white border border-gray-100 shadow-[0_10px_30px_rgba(0,0,0,0.1)] flex items-center justify-center text-black hover:bg-[#ff5987] hover:text-white transition-all opacity-0 group-hover:opacity-100 z-30 hidden md:flex"
+          >
+            <ChevronRight size={28} className="ml-0.5" />
+          </button>
         </div>
       </section>
 
