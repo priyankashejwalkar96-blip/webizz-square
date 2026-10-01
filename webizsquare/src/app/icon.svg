@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Swoosh -->
+  <path d="M 10 70 A 40 25 0 0 0 90 70" fill="none" stroke="#ff5987" stroke-width="8" stroke-linecap="round"/>
+  <!-- Arrow head on swoosh -->
+  <polygon points="90,70 80,60 95,55" fill="#ff5987"/>
+  
+  <!-- Left Pink W part -->
+  <polygon points="20,20 40,80 50,60 30,20" fill="#ff5987"/>
+  
+  <!-- Right Black W part -->
+  <polygon points="40,20 60,80 80,20 70,20 60,60 50,20" fill="#000000"/>
+</svg>
