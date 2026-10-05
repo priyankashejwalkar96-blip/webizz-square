@@ -91,9 +91,13 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     'site-settings': SiteSetting;
+    about: About;
+    'contact-page': ContactPage;
   };
   globalsSelect: {
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    about: AboutSelect<false> | AboutSelect<true>;
+    'contact-page': ContactPageSelect<false> | ContactPageSelect<true>;
   };
   locale: null;
   widgets: {
@@ -158,16 +162,145 @@ export interface Page {
   id: number;
   title: string;
   slug: string;
-  layout: {
-    headline: string;
-    subheadline?: string | null;
-    backgroundImage?: (number | null) | Media;
-    ctaText?: string | null;
-    ctaLink?: string | null;
-    id?: string | null;
-    blockName?: string | null;
-    blockType: 'hero';
-  }[];
+  layout?:
+    | (
+        | {
+            headline: string;
+            subheadline?: string | null;
+            backgroundImage?: (number | null) | Media;
+            ctaText?: string | null;
+            ctaLink?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hero';
+          }
+        | {
+            headline: string;
+            highlightedWord: string;
+            subheadline: string;
+            tabs: {
+              title: string;
+              heading: string;
+              desc: string;
+              image: number | Media;
+              id?: string | null;
+            }[];
+            stats?:
+              | {
+                  value: string;
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'about';
+          }
+        | {
+            headline: string;
+            highlightedWord: string;
+            subheadline: string;
+            logos: {
+              image: number | Media;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'brands';
+          }
+        | {
+            headline: string;
+            highlightedWord: string;
+            subheadline: string;
+            services: {
+              title: string;
+              icon: 'globe' | 'smartphone' | 'pen-tool' | 'share' | 'search' | 'bar-chart' | 'bot' | 'zap';
+              image: number | Media;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'services';
+          }
+        | {
+            label: string;
+            headline: string;
+            highlightedWord: string;
+            subheadline: string;
+            projects: {
+              category: string;
+              stat: string;
+              client: string;
+              title: string;
+              desc: string;
+              tags?:
+                | {
+                    tag: string;
+                    id?: string | null;
+                  }[]
+                | null;
+              image: number | Media;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'portfolio';
+          }
+        | {
+            headline: string;
+            highlightedWord: string;
+            subheadline: string;
+            stats: {
+              value: string;
+              label: string;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'stats';
+          }
+        | {
+            headline: string;
+            highlightedWord: string;
+            testimonials: {
+              name: string;
+              role: string;
+              tag: string;
+              location: string;
+              quote: string;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'testimonials';
+          }
+        | {
+            headline: string;
+            highlightedWord: string;
+            faqs: {
+              question: string;
+              answer: string;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faq';
+          }
+        | {
+            headline: string;
+            highlightedWord: string;
+            headlineEnd: string;
+            bullets: {
+              text: string;
+              id?: string | null;
+            }[];
+            formTitle: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'contact';
+          }
+      )[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -332,6 +465,155 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        about?:
+          | T
+          | {
+              headline?: T;
+              highlightedWord?: T;
+              subheadline?: T;
+              tabs?:
+                | T
+                | {
+                    title?: T;
+                    heading?: T;
+                    desc?: T;
+                    image?: T;
+                    id?: T;
+                  };
+              stats?:
+                | T
+                | {
+                    value?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        brands?:
+          | T
+          | {
+              headline?: T;
+              highlightedWord?: T;
+              subheadline?: T;
+              logos?:
+                | T
+                | {
+                    image?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        services?:
+          | T
+          | {
+              headline?: T;
+              highlightedWord?: T;
+              subheadline?: T;
+              services?:
+                | T
+                | {
+                    title?: T;
+                    icon?: T;
+                    image?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        portfolio?:
+          | T
+          | {
+              label?: T;
+              headline?: T;
+              highlightedWord?: T;
+              subheadline?: T;
+              projects?:
+                | T
+                | {
+                    category?: T;
+                    stat?: T;
+                    client?: T;
+                    title?: T;
+                    desc?: T;
+                    tags?:
+                      | T
+                      | {
+                          tag?: T;
+                          id?: T;
+                        };
+                    image?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        stats?:
+          | T
+          | {
+              headline?: T;
+              highlightedWord?: T;
+              subheadline?: T;
+              stats?:
+                | T
+                | {
+                    value?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        testimonials?:
+          | T
+          | {
+              headline?: T;
+              highlightedWord?: T;
+              testimonials?:
+                | T
+                | {
+                    name?: T;
+                    role?: T;
+                    tag?: T;
+                    location?: T;
+                    quote?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        faq?:
+          | T
+          | {
+              headline?: T;
+              highlightedWord?: T;
+              faqs?:
+                | T
+                | {
+                    question?: T;
+                    answer?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        contact?:
+          | T
+          | {
+              headline?: T;
+              highlightedWord?: T;
+              headlineEnd?: T;
+              bullets?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              formTitle?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
@@ -450,6 +732,115 @@ export interface SiteSetting {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about".
+ */
+export interface About {
+  id: number;
+  heroHeadline?: string | null;
+  heroHighlightedWord?: string | null;
+  heroDescription?: string | null;
+  companyHighlightsTitle?: string | null;
+  companyHighlightsSubtitle?: string | null;
+  companyStats?:
+    | {
+        value: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  companyBullets?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  storyHeadline?: string | null;
+  storyHighlightedWord?: string | null;
+  storyParagraphs?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  storyHighlightText?: string | null;
+  storyStats?:
+    | {
+        value: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  valuesHeadline?: string | null;
+  valuesHighlightedWord?: string | null;
+  valuesSubtitle?: string | null;
+  values?:
+    | {
+        title: string;
+        description: string;
+        /**
+         * Lucide React icon name (e.g. Target, Zap, Heart, Award)
+         */
+        iconName: string;
+        id?: string | null;
+      }[]
+    | null;
+  journeyHeadline?: string | null;
+  journeyHighlightedWord?: string | null;
+  journeySubtitle?: string | null;
+  timeline?:
+    | {
+        year: string;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  teamHeadline?: string | null;
+  teamHighlightedWord?: string | null;
+  teamSubtitle?: string | null;
+  teamStats?:
+    | {
+        value: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  ctaHeadline?: string | null;
+  ctaSubtitle?: string | null;
+  ctaButtonText?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-page".
+ */
+export interface ContactPage {
+  id: number;
+  heroBadgeText?: string | null;
+  heroHeadline?: string | null;
+  heroHighlightedWord?: string | null;
+  heroDescription?: string | null;
+  whatsappButtonText?: string | null;
+  callButtonText?: string | null;
+  contactHeadline?: string | null;
+  contactHighlightedWord?: string | null;
+  phoneNumber?: string | null;
+  emailAddress?: string | null;
+  locationText?: string | null;
+  businessHours?: string | null;
+  formTitle?: string | null;
+  formSubtitle?: string | null;
+  formButtonText?: string | null;
+  mapHeadline?: string | null;
+  mapHighlightedWord?: string | null;
+  mapSubtitle?: string | null;
+  mapEmbedUrl?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings_select".
  */
 export interface SiteSettingsSelect<T extends boolean = true> {
@@ -475,6 +866,112 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         id?: T;
       };
   copyrightText?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about_select".
+ */
+export interface AboutSelect<T extends boolean = true> {
+  heroHeadline?: T;
+  heroHighlightedWord?: T;
+  heroDescription?: T;
+  companyHighlightsTitle?: T;
+  companyHighlightsSubtitle?: T;
+  companyStats?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        id?: T;
+      };
+  companyBullets?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  storyHeadline?: T;
+  storyHighlightedWord?: T;
+  storyParagraphs?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  storyHighlightText?: T;
+  storyStats?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        id?: T;
+      };
+  valuesHeadline?: T;
+  valuesHighlightedWord?: T;
+  valuesSubtitle?: T;
+  values?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        iconName?: T;
+        id?: T;
+      };
+  journeyHeadline?: T;
+  journeyHighlightedWord?: T;
+  journeySubtitle?: T;
+  timeline?:
+    | T
+    | {
+        year?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  teamHeadline?: T;
+  teamHighlightedWord?: T;
+  teamSubtitle?: T;
+  teamStats?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        id?: T;
+      };
+  ctaHeadline?: T;
+  ctaSubtitle?: T;
+  ctaButtonText?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-page_select".
+ */
+export interface ContactPageSelect<T extends boolean = true> {
+  heroBadgeText?: T;
+  heroHeadline?: T;
+  heroHighlightedWord?: T;
+  heroDescription?: T;
+  whatsappButtonText?: T;
+  callButtonText?: T;
+  contactHeadline?: T;
+  contactHighlightedWord?: T;
+  phoneNumber?: T;
+  emailAddress?: T;
+  locationText?: T;
+  businessHours?: T;
+  formTitle?: T;
+  formSubtitle?: T;
+  formButtonText?: T;
+  mapHeadline?: T;
+  mapHighlightedWord?: T;
+  mapSubtitle?: T;
+  mapEmbedUrl?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

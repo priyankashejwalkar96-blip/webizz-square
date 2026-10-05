@@ -6,13 +6,15 @@ import { Users } from './collections/Users'
 import { Pages } from './collections/Pages'
 import { Media } from './collections/Media'
 import { SiteSettings } from './globals/SiteSettings'
+import { About } from './globals/About'
+import { ContactPage } from './globals/ContactPage'
 
 export default buildConfig({
   admin: {
     user: Users.slug,
   },
   collections: [Users, Pages, Media],
-  globals: [SiteSettings],
+  globals: [SiteSettings, About, ContactPage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || 'super-secret-key-that-should-be-in-env',
   typescript: {

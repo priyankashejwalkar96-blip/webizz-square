@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Smartphone, ChevronRight, ArrowRight, Menu, X } from "lucide-react";
 import { QuoteModal } from "./QuoteModal";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -78,6 +79,7 @@ export function Header() {
           </div>
           
           <div className="flex items-center gap-4">
+            <ThemeToggle />
             <button onClick={() => setIsModalOpen(true)} className="hidden md:flex bg-gradient-to-r from-[#ff5987] to-[#ff3b6a] text-white px-6 py-2.5 rounded-full font-bold text-sm items-center gap-1.5 hover:shadow-[0_5px_15px_rgba(255,89,135,0.4)] transition-all duration-300 transform hover:-translate-y-0.5">
               Get a Quote <ArrowRight size={16} />
             </button>

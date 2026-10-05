@@ -9,6 +9,38 @@
   --radius: 0.75rem;
 }
 
+[data-theme='dark'] {
+  --background: #121212;
+  --foreground: #ffffff;
+}
+
+/* 
+  Forcefully override hardcoded Tailwind background/text classes
+  when the dark mode toggle is active!
+*/
+[data-theme='dark'] .bg-white,
+[data-theme='dark'] .bg-gray-50 {
+  background-color: var(--background) !important;
+  border-color: #333333 !important;
+}
+
+[data-theme='dark'] .text-black,
+[data-theme='dark'] .text-gray-900,
+[data-theme='dark'] .text-gray-800 {
+  color: #ffffff !important;
+}
+
+[data-theme='dark'] .text-gray-700,
+[data-theme='dark'] .text-gray-600 {
+  color: #d1d5db !important;
+}
+
+[data-theme='dark'] .bg-white\/5,
+[data-theme='dark'] .bg-white\/10,
+[data-theme='dark'] .bg-gray-100 {
+  background-color: #1a1a1a !important;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);

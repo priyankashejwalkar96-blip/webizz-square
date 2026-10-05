@@ -3,6 +3,7 @@ import { Outfit } from "next/font/google";
 import "../globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const outfit = Outfit({ subsets: ["latin"], display: "swap" });
 
@@ -18,12 +19,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
-      <body className={`${outfit.className} antialiased bg-white text-black selection:bg-[#ff5987] selection:text-white overflow-x-hidden`} suppressHydrationWarning>
-        <Header />
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <Footer />
+      <body className={`${outfit.className} antialiased bg-background text-foreground selection:bg-[#ff5987] selection:text-white overflow-x-hidden`} suppressHydrationWarning>
+        <ThemeProvider>
+          <Header />
+          <main className="min-h-screen">
+            {children}
+          </main>
+          <Footer />
         
         {/* Floating Contact Buttons */}
         <div className="fixed bottom-8 left-8 z-[100] flex flex-col gap-4">
@@ -46,6 +48,7 @@ export default function RootLayout({
             </svg>
           </a>
         </div>
+        </ThemeProvider>
       </body>
     </html>
   );

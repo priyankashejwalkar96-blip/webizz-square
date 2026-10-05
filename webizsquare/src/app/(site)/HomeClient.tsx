@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 import { ArrowRight, Code, Smartphone, Globe, Sparkles, ChevronRight, ChevronLeft, ChevronDown, Zap, Shield, Star, CheckCircle, Quote, PenTool, Share2, Search, BarChart, Bot, ArrowUpRight, MapPin, BadgeCheck } from "lucide-react";
 import Link from "next/link";
 
-export default function Home({ initialHeroData }: { initialHeroData?: any }) {
+export default function Home({ initialHeroData, initialAboutData, initialBrandsData, initialServicesData, initialPortfolioData, initialStatsData, initialTestimonialsData, initialFAQData, initialContactData }: { initialHeroData?: any, initialAboutData?: any, initialBrandsData?: any, initialServicesData?: any, initialPortfolioData?: any, initialStatsData?: any, initialTestimonialsData?: any, initialFAQData?: any, initialContactData?: any }) {
   const [mounted, setMounted] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [activeAboutTab, setActiveAboutTab] = useState(0);
@@ -19,39 +19,41 @@ export default function Home({ initialHeroData }: { initialHeroData?: any }) {
     }
   };
 
-  const aboutTabs = [
+  const aboutTabs = initialAboutData?.tabs?.length > 0 ? initialAboutData.tabs : [
     {
       title: "Our Vision",
       heading: "Expert Team",
       desc: "Our dedicated team has the skills and experience to deliver cutting-edge solutions. We combine creative design with robust engineering to ensure your project not only looks great but performs flawlessly.",
-      img: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop"
+      image: { url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop" }
     },
     {
       title: "Our Mission",
       heading: "Empowering Growth",
       desc: "We exist to help businesses scale globally through highly optimized, conversion-focused digital platforms. We transform complex problems into intuitive, user-friendly solutions.",
-      img: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=800&auto=format&fit=crop"
+      image: { url: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=800&auto=format&fit=crop" }
     },
     {
       title: "Our Approach",
       heading: "Agile & Data-Driven",
       desc: "We don't just guess; we use analytics, heatmaps, and A/B testing to drive design and development decisions. Our agile methodology ensures continuous delivery and complete transparency.",
-      img: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=800&auto=format&fit=crop"
+      image: { url: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=800&auto=format&fit=crop" }
     },
     {
       title: "Core Values",
       heading: "Integrity & Innovation",
       desc: "We believe in honest communication, writing exceptionally clean code, and pushing the boundaries of what is digitally possible. Our code is as beautiful as our designs.",
-      img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=800&auto=format&fit=crop"
+      image: { url: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=800&auto=format&fit=crop" }
     }
   ];
 
-  const testimonials = [
+  const defaultTestimonials = [
     { name: "Rajendra Deshmukh", role: "Managing Director, Deshmukh Agro Exports", tag: "CUSTOM ERP & WEB PLATFORM", location: "Nashik", quote: "Webiz Square engineered our global export portal and custom inventory ERP. Our export inquiries tripled within 60 days of launch, and the loading speed on international mobile networks is astounding." },
     { name: "Pooja Patil", role: "Founder & Creative Director, Sweet Affairs Confectioneries", tag: "E-COMMERCE & BRANDING", location: "Pune", quote: "The team at Webiz Square transformed our branding and e-commerce store. The dark aesthetic, fluid product transitions, and 1-click checkout increased our direct online revenue by over 240%." },
     { name: "Vikram Mehta", role: "Operations Head, Polymer Crafts Manufacturing", tag: "ENTERPRISE ERP SOFTWARE", location: "Mumbai", quote: "We replaced our sluggish legacy software with Webiz Square One. The automated GST billing and real-time inventory tracking saved our accounts team over 25 hours every week. Highly recommended!" },
     { name: "Anita Sharma", role: "CEO, TechFlow Innovations", tag: "MOBILE APP DEVELOPMENT", location: "Bangalore", quote: "The mobile app they built for us is incredibly smooth. The UX is top-notch, and our user retention increased by 45% in just the first quarter. Truly exceptional team to work with!" }
   ];
+
+  const testimonials = initialTestimonialsData?.testimonials?.length > 0 ? initialTestimonialsData.testimonials : defaultTestimonials;
 
   const scrollSlider = (direction: 'left' | 'right') => {
     if (sliderRef.current) {
@@ -66,16 +68,33 @@ export default function Home({ initialHeroData }: { initialHeroData?: any }) {
 
   if (!mounted) return null;
 
-  const services = [
-    { title: "Website Design", icon: <Globe size={16} className="text-[#ff5987]" />, image: "https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=800&auto=format&fit=crop" },
-    { title: "App Development", icon: <Smartphone size={16} className="text-[#ff5987]" />, image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=800&auto=format&fit=crop" },
-    { title: "Graphic Design", icon: <PenTool size={16} className="text-[#ff5987]" />, image: "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=800&auto=format&fit=crop" },
-    { title: "Social Media Marketing", icon: <Share2 size={16} className="text-[#ff5987]" />, image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=800&auto=format&fit=crop" },
-    { title: "Search Engine Optimization", icon: <Search size={16} className="text-[#ff5987]" />, image: "https://images.unsplash.com/photo-1562577309-4932fdd64cd1?q=80&w=800&auto=format&fit=crop" },
-    { title: "Search Engine Marketing", icon: <BarChart size={16} className="text-[#ff5987]" />, image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop" },
-    { title: "AI Integration", icon: <Bot size={16} className="text-[#ff5987]" />, image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=800&auto=format&fit=crop" },
-    { title: "Marketing Automation", icon: <Zap size={16} className="text-[#ff5987]" />, image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop" }
+  const defaultServices = [
+    { title: "Website Design", iconName: "globe", image: { url: "https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=800&auto=format&fit=crop" } },
+    { title: "App Development", iconName: "smartphone", image: { url: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=800&auto=format&fit=crop" } },
+    { title: "Graphic Design", iconName: "pen-tool", image: { url: "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=800&auto=format&fit=crop" } },
+    { title: "Social Media Marketing", iconName: "share", image: { url: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=800&auto=format&fit=crop" } },
+    { title: "Search Engine Optimization", iconName: "search", image: { url: "https://images.unsplash.com/photo-1562577309-4932fdd64cd1?q=80&w=800&auto=format&fit=crop" } },
+    { title: "Search Engine Marketing", iconName: "bar-chart", image: { url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop" } },
+    { title: "AI Integration", iconName: "bot", image: { url: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=800&auto=format&fit=crop" } },
+    { title: "Marketing Automation", iconName: "zap", image: { url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop" } }
   ];
+
+  const services = initialServicesData?.services?.length > 0 ? initialServicesData.services : defaultServices;
+
+  const getIcon = (iconName: string) => {
+    const props = { size: 16, className: "text-[#ff5987]" };
+    switch(iconName) {
+      case 'globe': return <Globe {...props} />;
+      case 'smartphone': return <Smartphone {...props} />;
+      case 'pen-tool': return <PenTool {...props} />;
+      case 'share': return <Share2 {...props} />;
+      case 'search': return <Search {...props} />;
+      case 'bar-chart': return <BarChart {...props} />;
+      case 'bot': return <Bot {...props} />;
+      case 'zap': return <Zap {...props} />;
+      default: return <Globe {...props} />;
+    }
+  };
 
   return (
     <main className="bg-white text-black overflow-hidden selection:bg-[#ff5987] selection:text-white pb-0">
@@ -100,9 +119,11 @@ export default function Home({ initialHeroData }: { initialHeroData?: any }) {
             </motion.p>
             
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-10">
-              <button className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-[#ff5987] to-[#ff3b6a] text-white rounded-full font-bold flex items-center justify-center gap-2 hover:shadow-[0_5px_20px_rgba(255,89,135,0.4)] transition-all transform hover:-translate-y-1">
-                Book Free Strategy Call
-              </button>
+              <Link href={initialHeroData?.ctaLink || "/contact"}>
+                <button className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-[#ff5987] to-[#ff3b6a] text-white rounded-full font-bold flex items-center justify-center gap-2 hover:shadow-[0_5px_20px_rgba(255,89,135,0.4)] transition-all transform hover:-translate-y-1">
+                  {initialHeroData?.ctaText || "Book Free Strategy Call"}
+                </button>
+              </Link>
               <button className="w-full sm:w-auto px-8 py-4 bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300 text-black rounded-full font-bold flex items-center justify-center gap-2 transition-all shadow-sm">
                 Our Services <ArrowRight size={18} />
               </button>
@@ -126,7 +147,7 @@ export default function Home({ initialHeroData }: { initialHeroData?: any }) {
           {/* Right Image */}
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2, duration: 0.7 }} className="flex-1 relative w-full max-w-[600px] lg:max-w-none">
             <div className="relative rounded-[2.5rem] overflow-hidden border border-gray-200 shadow-[0_20px_50px_rgba(0,0,0,0.1)] aspect-[4/3] lg:aspect-square">
-              <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format&fit=crop" className="w-full h-full object-cover" alt="VR Tech" />
+              <img src={initialHeroData?.backgroundImage?.url || "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format&fit=crop"} className="w-full h-full object-cover" alt={initialHeroData?.backgroundImage?.alt || "Hero Image"} />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
             </div>
             {/* Floating Element */}
@@ -147,9 +168,9 @@ export default function Home({ initialHeroData }: { initialHeroData?: any }) {
       <section className="py-24 px-6 relative bg-gray-50 border-y border-gray-200">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black">About <span className="text-[#ff5987]">Webiz Square</span></h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black">{initialAboutData?.headline || "About"} <span className="text-[#ff5987]">{initialAboutData?.highlightedWord || "Webiz Square"}</span></h2>
             <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-              As a leading Digital Agency, we offer strategic solutions tailored to elevate your brand's digital presence.
+              {initialAboutData?.subheadline || "As a leading Digital Agency, we offer strategic solutions tailored to elevate your brand's digital presence."}
             </p>
           </div>
           
@@ -193,20 +214,20 @@ export default function Home({ initialHeroData }: { initialHeroData?: any }) {
                    transition={{ duration: 0.4 }}
                    className="flex-1 w-full h-full z-10"
                  >
-                   <img src={aboutTabs[activeAboutTab].img} className="w-full h-48 md:h-full object-cover rounded-2xl" alt="Team" />
+                   <img src={aboutTabs[activeAboutTab].image?.url} className="w-full h-48 md:h-full object-cover rounded-2xl" alt="Team" />
                  </motion.div>
                </div>
                
                {/* Stat Cards */}
                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                 {[
-                   { val: "97%", text: "Success Rate" },
-                   { val: "99%", text: "Client Retention" },
-                   { val: "300%", text: "ROI Increase" }
-                 ].map((stat, i) => (
+                 {(initialAboutData?.stats?.length > 0 ? initialAboutData.stats : [
+                   { value: "97%", label: "Success Rate" },
+                   { value: "99%", label: "Client Retention" },
+                   { value: "300%", label: "ROI Increase" }
+                 ]).map((stat: any, i: number) => (
                    <div key={i} className="bg-gradient-to-br from-[#ff5987] to-[#e04572] p-8 rounded-[2rem] text-center shadow-[0_10px_30px_rgba(255,89,135,0.3)] transform hover:-translate-y-2 transition-transform">
-                     <h4 className="text-4xl font-black text-white mb-2">{stat.val}</h4>
-                     <p className="text-[10px] font-bold text-white/90 uppercase tracking-widest">{stat.text}</p>
+                     <h4 className="text-4xl font-black text-white mb-2">{stat.value}</h4>
+                     <p className="text-[10px] font-bold text-white/90 uppercase tracking-widest">{stat.label}</p>
                    </div>
                  ))}
                </div>
@@ -218,8 +239,8 @@ export default function Home({ initialHeroData }: { initialHeroData?: any }) {
       {/* 3. Brands We Work With (Reused) */}
       <section className="py-24 px-6 border-y border-gray-200 bg-gray-50 relative overflow-hidden">
         <div className="max-w-4xl mx-auto text-center mb-16 relative z-10">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight text-black">Brands We <span className="text-[#ff5987]">Work With</span></h2>
-          <p className="text-gray-600 text-lg md:text-xl">Trusted by leading brands across industries driving digital transformation.</p>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight text-black">{initialBrandsData?.headline || "Brands We"} <span className="text-[#ff5987]">{initialBrandsData?.highlightedWord || "Work With"}</span></h2>
+          <p className="text-gray-600 text-lg md:text-xl">{initialBrandsData?.subheadline || "Trusted by leading brands across industries driving digital transformation."}</p>
         </div>
         <div className="w-full flex relative">
           <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-gray-50 to-transparent z-10"></div>
@@ -228,9 +249,9 @@ export default function Home({ initialHeroData }: { initialHeroData?: any }) {
           <motion.div className="flex gap-8 items-center whitespace-nowrap cursor-default" animate={{ x: ["0%", "-50%"] }} transition={{ duration: 50, ease: "linear", repeat: Infinity }}>
             {[...Array(2)].map((_, i) => (
               <div key={i} className="flex gap-8 items-center pr-8">
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((num) => (
-                  <div key={num} className="w-[150px] h-[150px] shrink-0 bg-white border border-gray-100 rounded-[1.5rem] flex items-center justify-center p-4 opacity-100 transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_15px_40px_rgba(255,89,135,0.08)] hover:-translate-y-1">
-                    <img src={`/${num}.png`} alt={`Brand ${num}`} className="w-[90%] h-[90%] object-contain transition-transform duration-300 hover:scale-110" />
+                {(initialBrandsData?.logos?.length > 0 ? initialBrandsData.logos : [{image: {url: "/1.png"}}, {image: {url: "/2.png"}}, {image: {url: "/3.png"}}, {image: {url: "/4.png"}}, {image: {url: "/5.png"}}, {image: {url: "/6.png"}}, {image: {url: "/7.png"}}, {image: {url: "/8.png"}}, {image: {url: "/9.png"}}, {image: {url: "/10.png"}}, {image: {url: "/11.png"}}, {image: {url: "/12.png"}}]).map((logo: any, idx: number) => (
+                  <div key={idx} className="w-[150px] h-[150px] shrink-0 bg-white border border-gray-100 rounded-[1.5rem] flex items-center justify-center p-4 opacity-100 transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_15px_40px_rgba(255,89,135,0.08)] hover:-translate-y-1">
+                    <img src={logo?.image?.url} alt={`Brand ${idx}`} className="w-[90%] h-[90%] object-contain transition-transform duration-300 hover:scale-110" />
                   </div>
                 ))}
               </div>
@@ -243,18 +264,18 @@ export default function Home({ initialHeroData }: { initialHeroData?: any }) {
       <section className="py-24 px-6 bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black">Our <span className="text-[#ff5987]">Services</span></h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">End-to-end digital solutions that drive measurable growth.</p>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black">{initialServicesData?.headline || "Our"} <span className="text-[#ff5987]">{initialServicesData?.highlightedWord || "Services"}</span></h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">{initialServicesData?.subheadline || "End-to-end digital solutions that drive measurable growth."}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.slice(0,6).map((service, index) => (
               <div key={index} className={`group relative h-[300px] rounded-3xl overflow-hidden cursor-pointer shadow-lg hover:shadow-xl transition-shadow border border-gray-100 ${index % 3 === 1 ? 'lg:translate-y-12' : ''}`}>
-                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style={{ backgroundImage: `url(${service.image})` }}></div>
+                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style={{ backgroundImage: `url('${service?.image?.url}')` }}></div>
                 <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/70 transition-opacity duration-300 group-hover:opacity-90"></div>
                 
                 <div className="absolute bottom-5 left-5 right-5">
                   <div className="bg-white/95 backdrop-blur-sm rounded-full py-2.5 px-4 flex items-center gap-3 shadow-lg transform transition-transform group-hover:-translate-y-1">
-                    <div className="w-7 h-7 rounded-full bg-[#ff5987]/10 flex items-center justify-center">{service.icon}</div>
+                    <div className="w-7 h-7 rounded-full bg-[#ff5987]/10 flex items-center justify-center">{getIcon(service.icon || service.iconName)}</div>
                     <span className="text-black font-bold text-xs tracking-wide">{service.title}</span>
                   </div>
                 </div>
@@ -269,10 +290,10 @@ export default function Home({ initialHeroData }: { initialHeroData?: any }) {
         <div className="max-w-[1400px] mx-auto px-6 mb-16 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="text-center md:text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-200 bg-white text-gray-600 text-xs font-bold tracking-widest uppercase mb-6 shadow-sm">
-              <Sparkles size={12} className="text-[#ff5987]" /> PROVEN TRACK RECORD
+              <Sparkles size={12} className="text-[#ff5987]" /> {initialPortfolioData?.label || "PROVEN TRACK RECORD"}
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black">Transformative <span className="text-[#ff5987]">Success</span></h2>
-            <p className="text-gray-600">Discover how our bespoke strategies brought victory to our clients.</p>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black">{initialPortfolioData?.headline || "Transformative"} <span className="text-[#ff5987]">{initialPortfolioData?.highlightedWord || "Success"}</span></h2>
+            <p className="text-gray-600">{initialPortfolioData?.subheadline || "Discover how our bespoke strategies brought victory to our clients."}</p>
           </div>
           
           <div className="flex items-center gap-4">
@@ -285,50 +306,50 @@ export default function Home({ initialHeroData }: { initialHeroData?: any }) {
         {/* Interactive Slider Container */}
         <div className="max-w-[1400px] mx-auto overflow-hidden relative pb-12 group px-4">
           <div ref={projectSliderRef} className="flex gap-6 md:gap-8 overflow-x-auto snap-x snap-mandatory pb-12 pt-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] scroll-smooth">
-            {[
+            {(initialPortfolioData?.projects?.length > 0 ? initialPortfolioData.projects : [
               {
                 category: "Web & E-Commerce", stat: "+280% GMV Growth", client: "EasyVendor Global",
                 title: "EasyVendor B2B Multi-Vendor Platform",
                 desc: "Enterprise multi-vendor procurement and wholesale marketplace with automated vendor settlements, real-time inventory syncing, and B2B pricing tiers.",
-                tags: ["Next.js", "React", "PostgreSQL", "+2"],
-                image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop"
+                tags: [{ tag: "Next.js" }, { tag: "React" }, { tag: "PostgreSQL" }, { tag: "+2" }],
+                image: { url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop" }
               },
               {
                 category: "E-Commerce", stat: "1.1s Load Time", client: "EGR59 Foods Pvt Ltd",
                 title: "EGR59 Gourmet Food Showcase & Shop",
                 desc: "Ultra-fast headless food ordering experience with live kitchen dispatch tracking, recipe discovery, and international logistics integration.",
-                tags: ["Next.js App Router", "Stripe / Razorpay", "Tailwind", "+1"],
-                image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=800&auto=format&fit=crop"
+                tags: [{ tag: "Next.js App Router" }, { tag: "Stripe / Razorpay" }, { tag: "Tailwind" }, { tag: "+1" }],
+                image: { url: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=800&auto=format&fit=crop" }
               },
               {
                 category: "Digital Experience", stat: "45k+ Monthly Visitors", client: "Eternal Devalaya Trust",
                 title: "Eternal Devalaya Cultural Portal",
                 desc: "Immersive spiritual and cultural heritage portal with 3D temple walkthrough previews, live donation processing, and multi-lingual support.",
-                tags: ["React", "Next.js", "Cloudflare CDN", "+1"],
-                image: "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?q=80&w=800&auto=format&fit=crop"
+                tags: [{ tag: "React" }, { tag: "Next.js" }, { tag: "Cloudflare CDN" }, { tag: "+1" }],
+                image: { url: "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?q=80&w=800&auto=format&fit=crop" }
               },
               {
                 category: "Brand & E-Commerce", stat: "4.8x ROI on Ads", client: "The Avocado Co.",
                 title: "The Avo Company DTC Superfood Site",
                 desc: "Direct to consumer e-commerce experience highlighting sustainable farming and organic avocado products with a modern, earthy aesthetic.",
-                tags: ["Next.js", "React", "PostgreSQL", "+2"],
-                image: "https://images.unsplash.com/photo-1512314889357-e157c22f938d?q=80&w=800&auto=format&fit=crop"
+                tags: [{ tag: "Next.js" }, { tag: "React" }, { tag: "PostgreSQL" }, { tag: "+2" }],
+                image: { url: "https://images.unsplash.com/photo-1512314889357-e157c22f938d?q=80&w=800&auto=format&fit=crop" }
               },
               {
                 category: "Service Platform", stat: "+190% Lead Inquiries", client: "Mech Moto Automotives",
                 title: "Mech Moto Automotive Service Hub",
                 desc: "Digital service booking platform for premium automotive care with real-time mechanic tracking and automated service reminders.",
-                tags: ["Next.js App Router", "Stripe / Razorpay", "Tailwind", "+1"],
-                image: "https://images.unsplash.com/photo-1503375894024-426b3a3c9b68?q=80&w=800&auto=format&fit=crop"
+                tags: [{ tag: "Next.js App Router" }, { tag: "Stripe / Razorpay" }, { tag: "Tailwind" }, { tag: "+1" }],
+                image: { url: "https://images.unsplash.com/photo-1503375894024-426b3a3c9b68?q=80&w=800&auto=format&fit=crop" }
               },
               {
                 category: "Industrial Web", stat: "Top 3 Google Ranking", client: "Polymer Crafts Inc.",
                 title: "Polymer Crafts Industrial Showcase",
                 desc: "B2B manufacturing catalogue with advanced technical specifications filtering and international bulk quote request system.",
-                tags: ["React", "Next.js", "Cloudflare CDN", "+1"],
-                image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=800&auto=format&fit=crop"
+                tags: [{ tag: "React" }, { tag: "Next.js" }, { tag: "Cloudflare CDN" }, { tag: "+1" }],
+                image: { url: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=800&auto=format&fit=crop" }
               }
-            ].map((project, idx) => (
+            ]).map((project: any, idx: number) => (
               <div key={idx} className="w-[85vw] md:w-[450px] lg:w-[480px] shrink-0 snap-center bg-white border border-gray-100 rounded-3xl overflow-hidden group hover:border-[#ff5987]/30 transition-all duration-500 shadow-[0_10px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(255,89,135,0.12)]">
                 <div className="p-4 pb-0">
                   <div className="relative h-64 overflow-hidden rounded-2xl bg-gray-100 flex items-center justify-center">
@@ -339,7 +360,7 @@ export default function Home({ initialHeroData }: { initialHeroData?: any }) {
                     <div className="absolute top-4 right-4 z-20 bg-[#ff5987] px-3 py-1.5 text-[9px] font-bold text-white rounded-full shadow-[0_5px_15px_rgba(255,89,135,0.4)]">
                       {project.stat}
                     </div>
-                    <img src={project.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt={project.title} />
+                    <img src={project?.image?.url} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt={project.title} />
                   </div>
                 </div>
                 <div className="p-6 relative z-20">
@@ -347,9 +368,9 @@ export default function Home({ initialHeroData }: { initialHeroData?: any }) {
                   <h3 className="text-xl font-black mb-3 text-black group-hover:text-[#ff5987] transition-colors leading-tight line-clamp-1">{project.title}</h3>
                   <p className="text-sm text-gray-500 leading-relaxed mb-6 line-clamp-2">{project.desc}</p>
                   <div className="flex flex-wrap gap-2">
-                    {project.tags.map((t, i) => (
-                      <span key={i} className={`text-[10px] font-bold px-3 py-1.5 rounded-lg ${t.startsWith('+') ? 'bg-[#ff5987]/10 text-[#ff5987]' : 'bg-gray-50 border border-gray-100 text-gray-600'}`}>
-                        {t}
+                    {project.tags?.map((t: any, i: number) => (
+                      <span key={i} className={`text-[10px] font-bold px-3 py-1.5 rounded-lg ${t.tag?.startsWith('+') ? 'bg-[#ff5987]/10 text-[#ff5987]' : 'bg-gray-50 border border-gray-100 text-gray-600'}`}>
+                        {t.tag}
                       </span>
                     ))}
                   </div>
@@ -378,19 +399,19 @@ export default function Home({ initialHeroData }: { initialHeroData?: any }) {
       <section className="bg-gradient-to-r from-[#ff5987] to-[#e04572] py-16 px-6">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12">
            <div className="text-center lg:text-left">
-             <h2 className="text-4xl font-bold text-white mb-2">Numbers That <span className="text-black">Speak</span></h2>
-             <p className="text-white/90 text-lg">We are proud of the impact we've made globally.</p>
+             <h2 className="text-4xl font-bold text-white mb-2">{initialStatsData?.headline || "Numbers That"} <span className="text-black">{initialStatsData?.highlightedWord || "Speak"}</span></h2>
+             <p className="text-white/90 text-lg">{initialStatsData?.subheadline || "We are proud of the impact we've made globally."}</p>
            </div>
            <div className="flex flex-wrap justify-center gap-6">
-             {[
-               { val: "150+", text: "Projects Delivered" },
-               { val: "$50M+", text: "Client Revenue" },
-               { val: "100%", text: "Satisfaction" },
-               { val: "300%", text: "ROI Average" }
-             ].map((stat, i) => (
+             {(initialStatsData?.stats?.length > 0 ? initialStatsData.stats : [
+               { value: "150+", label: "Projects Delivered" },
+               { value: "$50M+", label: "Client Revenue" },
+               { value: "100%", label: "Satisfaction" },
+               { value: "300%", label: "ROI Average" }
+             ]).map((stat: any, i: number) => (
                <div key={i} className="bg-white p-6 rounded-[2rem] text-center min-w-[160px] shadow-xl transform hover:-translate-y-2 transition-transform">
-                 <h4 className="text-4xl font-black text-[#ff5987] mb-1">{stat.val}</h4>
-                 <p className="text-xs font-bold text-gray-800 uppercase tracking-wider">{stat.text}</p>
+                 <h4 className="text-4xl font-black text-[#ff5987] mb-1">{stat.value}</h4>
+                 <p className="text-xs font-bold text-gray-800 uppercase tracking-wider">{stat.label}</p>
                </div>
              ))}
            </div>
@@ -400,7 +421,7 @@ export default function Home({ initialHeroData }: { initialHeroData?: any }) {
       {/* 7. What Our Clients Say */}
       <section className="py-24 px-6 bg-[#fff5f7] overflow-hidden relative">
         <div className="text-center mb-16 relative z-10">
-          <h2 className="text-4xl md:text-5xl font-bold text-black">What Our <span className="text-[#ff5987]">Clients Say</span></h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-black">{initialTestimonialsData?.headline || "What Our"} <span className="text-[#ff5987]">{initialTestimonialsData?.highlightedWord || "Clients Say"}</span></h2>
         </div>
         
         <div className="max-w-[1400px] mx-auto overflow-hidden relative z-10 px-4 group">
@@ -463,41 +484,41 @@ export default function Home({ initialHeroData }: { initialHeroData?: any }) {
       <section className="py-24 px-6 bg-white relative border-t border-gray-100">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-black">Frequently Asked <span className="text-[#ff5987]">Questions</span></h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-black">{initialFAQData?.headline || "Frequently Asked"} <span className="text-[#ff5987]">{initialFAQData?.highlightedWord || "Questions"}</span></h2>
           </div>
           
           <div className="space-y-4">
-            {[
+            {(initialFAQData?.faqs?.length > 0 ? initialFAQData.faqs : [
               {
-                q: "How long does it take to develop a custom website or software?",
-                a: "A standard high-performance marketing website or e-commerce storefront typically takes 2 to 4 weeks. Custom enterprise ERP software or multi-module applications take between 4 to 8 weeks depending on scope and integrations. We operate in bi-weekly agile sprints so you see tangible progress every week."
+                question: "How long does it take to develop a custom website or software?",
+                answer: "A standard high-performance marketing website or e-commerce storefront typically takes 2 to 4 weeks. Custom enterprise ERP software or multi-module applications take between 4 to 8 weeks depending on scope and integrations. We operate in bi-weekly agile sprints so you see tangible progress every week."
               },
               {
-                q: "Why should we choose Next.js and custom code over WordPress or page builders?",
-                a: "Custom code with Next.js provides unmatched loading speeds, perfect technical SEO, and complete design freedom. Unlike WordPress, it won't break when plugins update, and it offers enterprise-level security out of the box."
+                question: "Why should we choose Next.js and custom code over WordPress or page builders?",
+                answer: "Custom code with Next.js provides unmatched loading speeds, perfect technical SEO, and complete design freedom. Unlike WordPress, it won't break when plugins update, and it offers enterprise-level security out of the box."
               },
               {
-                q: "Can we manage content and updates without coding knowledge?",
-                a: "Yes! We integrate modern headless Content Management Systems (like Sanity, Builder.io, or Strapi) so your marketing team can easily edit text, swap images, and publish blog posts without writing a single line of code."
+                question: "Can we manage content and updates without coding knowledge?",
+                answer: "Yes! We integrate modern headless Content Management Systems (like Sanity, Builder.io, or Strapi) so your marketing team can easily edit text, swap images, and publish blog posts without writing a single line of code."
               },
               {
-                q: "How do you handle website migration from our existing site without losing SEO rankings?",
-                a: "We perform a comprehensive SEO audit before migration. We map all your existing URLs, implement proper 301 redirects, migrate meta tags, and ensure the new architecture strictly adheres to Google's Core Web Vitals for a seamless transition."
+                question: "How do you handle website migration from our existing site without losing SEO rankings?",
+                answer: "We perform a comprehensive SEO audit before migration. We map all your existing URLs, implement proper 301 redirects, migrate meta tags, and ensure the new architecture strictly adheres to Google's Core Web Vitals for a seamless transition."
               },
               {
-                q: "Do you provide post-launch support and maintenance?",
-                a: "Absolutely. We offer dedicated monthly retainers to handle everything from software updates, security patches, new feature development, and server monitoring to ensure your digital platform scales safely alongside your business."
+                question: "Do you provide post-launch support and maintenance?",
+                answer: "Absolutely. We offer dedicated monthly retainers to handle everything from software updates, security patches, new feature development, and server monitoring to ensure your digital platform scales safely alongside your business."
               }
-            ].map((faq, i) => (
+            ]).map((faq: any, i: number) => (
               <details key={i} className="group bg-white border border-gray-100 shadow-[0_5px_15px_rgba(0,0,0,0.03)] hover:shadow-[0_15px_30px_rgba(255,89,135,0.08)] rounded-[1.25rem] [&_summary::-webkit-details-marker]:hidden transition-all duration-300">
                 <summary className="flex items-center justify-between p-6 md:p-8 cursor-pointer list-none font-bold text-lg text-black hover:text-[#ff5987] transition-colors">
-                  {faq.q}
+                  {faq.question}
                   <span className="transition-all duration-300 group-open:-rotate-180 bg-gray-50 group-open:bg-[#ff5987]/10 p-2 rounded-full text-gray-400 group-open:text-[#ff5987]">
                     <ChevronDown size={18} strokeWidth={2.5} />
                   </span>
                 </summary>
                 <div className="px-6 md:px-8 pb-6 md:pb-8 text-gray-600 leading-relaxed border-t border-gray-50 pt-6 text-[15px]">
-                  {faq.a}
+                  {faq.answer}
                 </div>
               </details>
             ))}
@@ -510,18 +531,18 @@ export default function Home({ initialHeroData }: { initialHeroData?: any }) {
         <div className="absolute right-0 bottom-0 w-[500px] h-[500px] bg-[#ff5987] rounded-full blur-[150px] opacity-10 pointer-events-none" />
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10">
            <div>
-             <h2 className="text-4xl md:text-6xl font-bold mb-8 leading-tight text-black">Ready to <span className="text-[#ff5987]">Transform</span><br/>Your Business?</h2>
+             <h2 className="text-4xl md:text-6xl font-bold mb-8 leading-tight text-black">{initialContactData?.headline || "Ready to"} <span className="text-[#ff5987]">{initialContactData?.highlightedWord || "Transform"}</span><br/>{initialContactData?.headlineEnd || "Your Business?"}</h2>
              <div className="space-y-6 mb-12">
-               {['Free Architecture Consultation', 'Guaranteed SEO Improvements', 'Lightning Fast Performance', 'Dedicated Support Team'].map((item, i) => (
+               {(initialContactData?.bullets?.length > 0 ? initialContactData.bullets : [{text: 'Free Architecture Consultation'}, {text: 'Guaranteed SEO Improvements'}, {text: 'Lightning Fast Performance'}, {text: 'Dedicated Support Team'}]).map((item: any, i: number) => (
                  <div key={i} className="flex items-center gap-4 text-gray-700 text-lg">
-                   <CheckCircle className="text-[#ff5987]" size={24} /> <span>{item}</span>
+                   <CheckCircle className="text-[#ff5987]" size={24} /> <span>{item.text}</span>
                  </div>
                ))}
              </div>
            </div>
            
            <div className="bg-white border border-gray-100 p-10 rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)]">
-             <h3 className="text-2xl font-bold mb-8 text-center text-black">Get Your Free Growth Audit</h3>
+             <h3 className="text-2xl font-bold mb-8 text-center text-black">{initialContactData?.formTitle || "Get Your Free Growth Audit"}</h3>
              <form className="space-y-4">
                <div className="grid grid-cols-2 gap-4">
                  <input type="text" placeholder="First Name" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-black focus:outline-none focus:border-[#ff5987] focus:bg-white transition-colors" />
