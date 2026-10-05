@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
@@ -17,8 +17,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth" suppressHydrationWarning>
-      <body className={`${outfit.className} antialiased bg-[#0a0a0a] text-white selection:bg-[#ff5987] selection:text-white overflow-x-hidden`} suppressHydrationWarning>
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+      <body className={`${outfit.className} antialiased bg-white text-black selection:bg-[#ff5987] selection:text-white overflow-x-hidden`} suppressHydrationWarning>
         <Header />
         <main className="min-h-screen">
           {children}

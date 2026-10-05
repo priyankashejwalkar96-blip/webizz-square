@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 import { ArrowRight, Code, Smartphone, Globe, Sparkles, ChevronRight, ChevronLeft, ChevronDown, Zap, Shield, Star, CheckCircle, Quote, PenTool, Share2, Search, BarChart, Bot, ArrowUpRight, MapPin, BadgeCheck } from "lucide-react";
 import Link from "next/link";
 
-export default function Home() {
+export default function Home({ initialHeroData }: { initialHeroData?: any }) {
   const [mounted, setMounted] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [activeAboutTab, setActiveAboutTab] = useState(0);
@@ -92,11 +92,11 @@ export default function Home() {
               <Sparkles size={16} /> <span>Award Winning Digital Agency</span>
             </motion.div>
             <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-5xl md:text-6xl lg:text-[70px] font-bold tracking-tighter leading-[1.1] mb-6 text-black">
-              Driving Business <br className="hidden lg:block"/> Growth Through <br/>
+              {initialHeroData?.headline || "Driving Business Growth Through"} <br/>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff5987] to-[#ff8dae]">Smart Digital Traffic</span>
             </motion.h1>
             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-lg text-gray-600 mb-10 max-w-xl mx-auto lg:mx-0">
-              We build lightning-fast, SEO-optimized digital experiences that drive measurable growth. From stunning websites to powerful web applications, we engineer success.
+              {initialHeroData?.subheadline || "We build lightning-fast, SEO-optimized digital experiences that drive measurable growth. From stunning websites to powerful web applications, we engineer success."}
             </motion.p>
             
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-10">
