@@ -14,6 +14,15 @@ import { Policies } from './collections/Policies'
 export default buildConfig({
   admin: {
     user: Users.slug,
+    meta: {
+      titleSuffix: '- Webiz Square Admin',
+    },
+    components: {
+      graphics: {
+        Logo: '@/components/AdminLogo#AdminLogo',
+        Icon: '@/components/AdminLogo#AdminLogo',
+      },
+    },
   },
   collections: [Users, Pages, Media, Services, Policies],
   globals: [SiteSettings, About, ContactPage],
