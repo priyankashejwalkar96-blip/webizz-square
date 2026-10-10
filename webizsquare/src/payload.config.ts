@@ -16,11 +16,12 @@ export default buildConfig({
     user: Users.slug,
     meta: {
       titleSuffix: '- Webiz Square Admin',
+      icons: [{ rel: 'icon', type: 'image/png', url: '/white-logo.png' }]
     },
     components: {
       graphics: {
         Logo: '@/components/AdminLogo#AdminLogo',
-        Icon: '@/components/AdminLogo#AdminLogo',
+        Icon: '@/components/AdminIcon#AdminIcon',
       },
     },
   },
