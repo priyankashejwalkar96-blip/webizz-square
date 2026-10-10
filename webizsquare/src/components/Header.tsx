@@ -6,9 +6,23 @@ import { Smartphone, ChevronRight, ArrowRight, Menu, X } from "lucide-react";
 import { QuoteModal } from "./QuoteModal";
 import { ThemeToggle } from "./ThemeToggle";
 
-export function Header() {
+export function Header({ services = [] }: { services?: { name: string, slug: string }[] }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const defaultServices = [
+    { name: 'Website Development', slug: 'website-development' },
+    { name: 'Application Development', slug: 'application-development' },
+    { name: 'All IT Services', slug: 'all-it-services' },
+    { name: 'ERP Software Development', slug: 'erp-software-development' },
+    { name: 'Graphics Designing', slug: 'graphics-designing' },
+    { name: 'Search Engine Optimization', slug: 'search-engine-optimization' },
+    { name: 'Social Media Optimization', slug: 'social-media-optimization' },
+    { name: 'Software Development', slug: 'software-development' },
+    { name: 'Website Hosting', slug: 'website-hosting' }
+  ];
+
+  const displayServices = services && services.length > 0 ? services : defaultServices;
 
   return (
     <div className="fixed top-0 w-full z-50">
@@ -55,19 +69,9 @@ export function Header() {
               <div className="absolute top-[80%] left-0 w-[280px] bg-white border border-gray-100 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-4 group-hover:translate-y-0 z-50 overflow-hidden pt-2">
                 <div className="absolute top-0 left-8 w-4 h-4 bg-white border-t border-l border-gray-100 rotate-45 -translate-y-1/2"></div>
                 <div className="relative bg-white flex flex-col py-3">
-                  {[
-                    'Website Development', 
-                    'Application Development', 
-                    'All IT Services', 
-                    'ERP Software Development', 
-                    'Graphics Designing', 
-                    'Search Engine Optimization', 
-                    'Social Media Optimization', 
-                    'Software Development', 
-                    'Website Hosting'
-                  ].map((item) => (
-                    <Link key={item} href="#" className="px-6 py-3 text-[15px] font-bold text-gray-800 hover:bg-gray-50 hover:text-[#ff5987] transition-colors">
-                      {item}
+                  {displayServices.map((item) => (
+                    <Link key={item.name} href={`/services/${item.slug}`} className="px-6 py-3 text-[15px] font-bold text-gray-800 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-white/10 hover:!text-[#ff5987] dark:hover:!text-[#ff5987] transition-colors">
+                      {item.name}
                     </Link>
                   ))}
                 </div>
@@ -105,19 +109,9 @@ export function Header() {
               Services
             </Link>
             <div className="flex flex-col mt-4 gap-3 pl-4 border-l-2 border-[#ff5987]/20">
-              {[
-                'Website Development', 
-                'Application Development', 
-                'All IT Services', 
-                'ERP Software Development', 
-                'Graphics Designing', 
-                'Search Engine Optimization', 
-                'Social Media Optimization', 
-                'Software Development', 
-                'Website Hosting'
-              ].map((item) => (
-                <Link key={item} href="#" onClick={() => setIsMobileMenuOpen(false)} className="text-[16px] text-gray-600">
-                  {item}
+              {displayServices.map((item) => (
+                <Link key={item.name} href={`/services/${item.slug}`} onClick={() => setIsMobileMenuOpen(false)} className="text-[16px] text-gray-600">
+                  {item.name}
                 </Link>
               ))}
             </div>

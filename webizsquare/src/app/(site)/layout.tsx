@@ -4,6 +4,8 @@ import "../globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { getPayload } from 'payload';
+import configPromise from '@/payload.config';
 
 const outfit = Outfit({ subsets: ["latin"], display: "swap" });
 
@@ -12,16 +14,31 @@ export const metadata: Metadata = {
   description: "A very fast, SEO-first, secure website with a full admin dashboard, built to rank higher on Google and bring in more clients globally.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let headerServices: any[] = [];
+  try {
+    const payload = await getPayload({ config: configPromise });
+    const { docs } = await payload.find({
+      collection: 'services',
+      where: {
+        isActive: { equals: true }
+      },
+      limit: 20
+    });
+    headerServices = docs.map(doc => ({ name: doc.title, slug: doc.slug }));
+  } catch (err) {
+    console.error("Could not fetch services for header", err);
+  }
+
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body className={`${outfit.className} antialiased bg-background text-foreground selection:bg-[#ff5987] selection:text-white overflow-x-hidden`} suppressHydrationWarning>
         <ThemeProvider>
-          <Header />
+          <Header services={headerServices} />
           <main className="min-h-screen">
             {children}
           </main>
