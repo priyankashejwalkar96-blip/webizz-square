@@ -177,7 +177,7 @@ export default function Home({ initialHeroData, initialAboutData, initialBrandsD
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             {/* Left Tabs */}
             <div className="lg:col-span-4 flex flex-col gap-4">
-              {aboutTabs.map((tab, i) => (
+              {aboutTabs.map((tab: any, i: number) => (
                 <div 
                   key={i} 
                   onClick={() => setActiveAboutTab(i)}
@@ -268,7 +268,7 @@ export default function Home({ initialHeroData, initialAboutData, initialBrandsD
             <p className="text-gray-600 max-w-2xl mx-auto">{initialServicesData?.subheadline || "End-to-end digital solutions that drive measurable growth."}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.slice(0,6).map((service, index) => (
+            {services.slice(0,6).map((service: any, index: number) => (
               <div key={index} className={`group relative h-[300px] rounded-3xl overflow-hidden cursor-pointer shadow-lg hover:shadow-xl transition-shadow border border-gray-100 ${index % 3 === 1 ? 'lg:translate-y-12' : ''}`}>
                 <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style={{ backgroundImage: `url('${service?.image?.url}')` }}></div>
                 <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/70 transition-opacity duration-300 group-hover:opacity-90"></div>
@@ -426,7 +426,7 @@ export default function Home({ initialHeroData, initialAboutData, initialBrandsD
         
         <div className="max-w-[1400px] mx-auto overflow-hidden relative z-10 px-4 group">
           <div ref={sliderRef} className="flex gap-6 md:gap-8 overflow-x-auto snap-x snap-mandatory pb-12 pt-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] scroll-smooth">
-            {testimonials.map((test, i) => (
+            {testimonials.map((test: any, i: number) => (
               <div key={i} className="w-[90vw] md:w-[400px] lg:w-[450px] shrink-0 snap-center bg-white rounded-[2rem] p-8 lg:p-10 shadow-[0_15px_40px_rgba(255,89,135,0.08)] transition-all duration-300 flex flex-col relative z-20">
                 {/* Top Row: Stars and Tag */}
                 <div className="flex justify-between items-start mb-8 gap-4 flex-wrap">

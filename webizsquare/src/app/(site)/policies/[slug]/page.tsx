@@ -18,7 +18,7 @@ function serializeLexical(nodes: any[]): React.ReactNode[] {
       return <p key={index} className="mb-4 text-gray-700 dark:text-gray-300 leading-relaxed">{serializeLexical(node.children)}</p>;
     }
     if (node.type === 'heading') {
-      const Tag = node.tag as keyof JSX.IntrinsicElements;
+      const Tag = node.tag as React.ElementType;
       const sizeClasses = {
         h1: 'text-4xl font-bold mb-6 mt-8 text-gray-900 dark:text-white',
         h2: 'text-3xl font-bold mb-5 mt-8 text-gray-900 dark:text-white',
@@ -31,7 +31,7 @@ function serializeLexical(nodes: any[]): React.ReactNode[] {
       return <Tag key={index} className={className}>{serializeLexical(node.children)}</Tag>;
     }
     if (node.type === 'list') {
-      const Tag = node.listType === 'number' ? 'ol' : 'ul';
+      const Tag = (node.listType === 'number' ? 'ol' : 'ul') as React.ElementType;
       const className = node.listType === 'number' ? 'list-decimal ml-6 mb-6' : 'list-disc ml-6 mb-6';
       return <Tag key={index} className={className + " text-gray-700 dark:text-gray-300 space-y-2"}>{serializeLexical(node.children)}</Tag>;
     }
