@@ -1,5 +1,5 @@
 import { buildConfig } from 'payload'
-import { sqliteAdapter } from '@payloadcms/db-sqlite'
+import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { Users } from './collections/Users'
@@ -18,13 +18,11 @@ export default buildConfig({
   collections: [Users, Pages, Media, Services, Policies],
   globals: [SiteSettings, About, ContactPage],
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || 'super-secret-key-that-should-be-in-env',
+  secret: process.env.PAYLOAD_SECRET || 'webizz_secret_key_12345',
   typescript: {
     outputFile: path.resolve(process.cwd(), 'src/payload-types.ts'),
   },
-  db: sqliteAdapter({
-    client: {
-      url: 'file:./payload.db',
-    },
+  db: postgresAdapter({
+    pool: { connectionString: process.env.DATABASE_URI || '' }
   }),
 })
