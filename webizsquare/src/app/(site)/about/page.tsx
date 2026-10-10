@@ -12,10 +12,15 @@ const iconMap: any = {
 };
 
 export default async function AboutPage() {
-  const payload = await getPayload({ config: configPromise })
-  const aboutData = await payload.findGlobal({
-    slug: 'about',
-  })
+  let aboutData = null;
+  try {
+    const payload = await getPayload({ config: configPromise })
+    aboutData = await payload.findGlobal({
+      slug: 'about',
+    })
+  } catch (err) {
+    console.error("Database tables might not exist yet:", err)
+  }
 
   // Destructure defaults if needed
   const heroHeadline = aboutData?.heroHeadline || "About";

@@ -7,15 +7,21 @@ export default async function Page() {
   const payload = await getPayload({ config: configPromise })
 
   // Fetch the "home" page from Payload CMS
-  const { docs } = await payload.find({
-    collection: 'pages',
-    depth: 3,
-    where: {
-      slug: {
-        equals: 'home',
+  let docs: any[] = []
+  try {
+    const result = await payload.find({
+      collection: 'pages',
+      depth: 3,
+      where: {
+        slug: {
+          equals: 'home',
+        },
       },
-    },
-  })
+    })
+    docs = result.docs
+  } catch (err) {
+    console.error("Database tables might not exist yet:", err)
+  }
 
   const homePage = docs[0]
 

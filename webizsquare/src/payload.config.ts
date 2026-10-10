@@ -23,6 +23,7 @@ export default buildConfig({
     outputFile: path.resolve(process.cwd(), 'src/payload-types.ts'),
   },
   db: postgresAdapter({
-    pool: { connectionString: process.env.DATABASE_URI || '' }
+    pool: { connectionString: process.env.DATABASE_URI || '' },
+    push: true,
   }),
 })

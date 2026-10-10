@@ -4,10 +4,15 @@ import configPromise from '@/payload.config'
 import React from 'react';
 
 export default async function ContactPage() {
-  const payload = await getPayload({ config: configPromise })
-  const contactData = await payload.findGlobal({
-    slug: 'contact-page',
-  })
+  let contactData = null;
+  try {
+    const payload = await getPayload({ config: configPromise })
+    contactData = await payload.findGlobal({
+      slug: 'contact-page',
+    })
+  } catch (err) {
+    console.error("Database tables might not exist yet:", err)
+  }
 
   const heroBadgeText = contactData?.heroBadgeText || "Contact Webiz Square";
   const heroHeadline = contactData?.heroHeadline || "Let's Start a";
