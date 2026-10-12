@@ -174,15 +174,19 @@ export async function GET() {
         console.log('SEO col alter note:', err.message)
       }
     }
-    const defaultServices = [
-      { title: "Website Design", icon: "Globe" },
-      { title: "App Development", icon: "Smartphone" },
-      { title: "Graphic Design", icon: "PenTool" },
-      { title: "Social Media Marketing", icon: "Share2" },
-      { title: "Search Engine Optimization", icon: "Search" },
-      { title: "Search Engine Marketing", icon: "Search" },
-      { title: "AI Integration", icon: "Bot" },
-      { title: "Marketing Automation", icon: "Zap" },
+    const defaultServices: Array<{
+      title: string
+      slug: string
+      icon: "Layout" | "Smartphone" | "Database" | "Search" | "Globe" | "PenTool" | "Share2" | "Bot" | "Zap" | "Shield"
+    }> = [
+      { title: "Website Design", slug: "website-design", icon: "Globe" },
+      { title: "App Development", slug: "app-development", icon: "Smartphone" },
+      { title: "Graphic Design", slug: "graphic-design", icon: "PenTool" },
+      { title: "Social Media Marketing", slug: "social-media-marketing", icon: "Share2" },
+      { title: "Search Engine Optimization", slug: "search-engine-optimization", icon: "Search" },
+      { title: "Search Engine Marketing", slug: "search-engine-marketing", icon: "Search" },
+      { title: "AI Integration", slug: "ai-integration", icon: "Bot" },
+      { title: "Marketing Automation", slug: "marketing-automation", icon: "Zap" },
     ]
 
     for (const service of defaultServices) {
@@ -193,8 +197,9 @@ export async function GET() {
           draft: false,
           data: {
             title: service.title,
+            slug: service.slug,
             description: `Professional ${service.title} services tailored to your business needs and measurable ROI.`,
-            icon: service.icon as any,
+            icon: service.icon,
             features: [
               { feature: `Enterprise-grade ${service.title}` },
               { feature: "Dedicated agile engineering team" },
