@@ -41,7 +41,7 @@ export default async function ContactPage() {
     <div className="min-h-screen bg-gray-50 text-black font-sans pb-32">
       
       {/* Top section with gradient background */}
-      <div className="relative pt-40 pb-20 px-6 overflow-hidden">
+      <div className="relative pt-16 md:pt-20 pb-20 px-6 overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-full bg-gradient-to-b from-[#ff5987]/10 to-transparent -z-10 blur-3xl rounded-full"></div>
         
         <div className="max-w-3xl mx-auto text-center relative z-10">

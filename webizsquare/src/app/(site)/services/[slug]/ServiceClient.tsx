@@ -10,7 +10,7 @@ export default function ServiceClient({ service }: { service: any }) {
   const Icon = (Icons as any)[iconName] || Layout;
 
   return (
-    <div className="pt-24 pb-24 min-h-screen">
+    <div className="pt-12 md:pt-16 pb-24 min-h-screen">
       <div className="relative h-[60vh] min-h-[500px] flex items-center">
         <div className="absolute inset-0">
           <img 

@@ -9,8 +9,57 @@ export default function Home({ initialHeroData, initialAboutData, initialBrandsD
   const [mounted, setMounted] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [activeAboutTab, setActiveAboutTab] = useState(0);
+  const [auditSubmitting, setAuditSubmitting] = useState(false);
+  const [auditSuccess, setAuditSuccess] = useState(false);
+  const [auditError, setAuditError] = useState('');
   const sliderRef = useRef<HTMLDivElement>(null);
   const projectSliderRef = useRef<HTMLDivElement>(null);
+
+  const handleAuditSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setAuditSubmitting(true);
+    setAuditError('');
+
+    try {
+      const formData = new FormData(e.currentTarget);
+      const firstName = formData.get('firstName') as string;
+      const lastName = formData.get('lastName') as string;
+      const email = formData.get('email') as string;
+      const company = formData.get('company') as string;
+
+      const res = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: `${firstName} ${lastName}`.trim(),
+          email,
+          company,
+          sourceType: 'growth_audit',
+          serviceInterested: 'Growth Audit',
+          landingPage: typeof window !== 'undefined' ? window.location.pathname : '/',
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || 'Failed to submit audit request');
+      }
+
+      if (typeof window !== 'undefined' && (window as any).dataLayer) {
+        (window as any).dataLayer.push({
+          event: 'generate_lead',
+          form_name: 'growth_audit',
+        });
+      }
+
+      setAuditSuccess(true);
+      (e.target as HTMLFormElement).reset();
+    } catch (err: any) {
+      setAuditError(err.message || 'Error submitting request. Please try again.');
+    } finally {
+      setAuditSubmitting(false);
+    }
+  };
 
   const scrollProjectSlider = (direction: 'left' | 'right') => {
     if (projectSliderRef.current) {
@@ -100,7 +149,7 @@ export default function Home({ initialHeroData, initialAboutData, initialBrandsD
     <main className="bg-white text-black overflow-hidden selection:bg-[#ff5987] selection:text-white pb-0">
       
       {/* 1. Hero Section */}
-      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 px-6">
+      <section className="relative pt-12 pb-20 lg:pt-20 lg:pb-32 px-6">
         <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#ff5987] rounded-full blur-[150px] opacity-10 pointer-events-none mix-blend-multiply" />
         
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16 relative z-10">
@@ -151,13 +200,13 @@ export default function Home({ initialHeroData, initialAboutData, initialBrandsD
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
             </div>
             {/* Floating Element */}
-            <div className="absolute -bottom-6 -left-6 bg-white/95 backdrop-blur-xl border border-gray-200 p-4 rounded-2xl shadow-xl flex items-center gap-4 animate-bounce" style={{ animationDuration: '3s' }}>
+            <div className="absolute -bottom-6 -left-6 bg-white/95 dark:bg-[#12131a]/95 backdrop-blur-xl border border-gray-200 dark:border-white/10 p-4 rounded-2xl shadow-xl flex items-center gap-4 animate-bounce" style={{ animationDuration: '3s' }}>
               <div className="w-12 h-12 bg-[#ff5987] rounded-full flex items-center justify-center shadow-inner">
                 <CheckCircle className="text-white" size={24} />
               </div>
               <div>
-                <p className="text-2xl font-black text-black">12K+</p>
-                <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">Happy Clients</p>
+                <p className="text-2xl font-black text-black dark:text-white">12K+</p>
+                <p className="text-[10px] text-gray-500 dark:text-gray-400 font-bold uppercase tracking-widest mt-1">Happy Clients</p>
               </div>
             </div>
           </motion.div>
@@ -274,9 +323,9 @@ export default function Home({ initialHeroData, initialAboutData, initialBrandsD
                 <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/70 transition-opacity duration-300 group-hover:opacity-90"></div>
                 
                 <div className="absolute bottom-5 left-5 right-5">
-                  <div className="bg-white/95 backdrop-blur-sm rounded-full py-2.5 px-4 flex items-center gap-3 shadow-lg transform transition-transform group-hover:-translate-y-1">
-                    <div className="w-7 h-7 rounded-full bg-[#ff5987]/10 flex items-center justify-center">{getIcon(service.icon || service.iconName)}</div>
-                    <span className="text-black font-bold text-xs tracking-wide">{service.title}</span>
+                  <div className="service-pill bg-white/95 dark:bg-[#12131a]/90 backdrop-blur-md rounded-full py-2.5 px-4 flex items-center gap-3 shadow-lg border border-gray-200/50 dark:border-white/15 transform transition-transform group-hover:-translate-y-1">
+                    <div className="w-7 h-7 rounded-full bg-[#ff5987]/10 dark:bg-[#ff5987]/20 flex items-center justify-center">{getIcon(service.icon || service.iconName)}</div>
+                    <span className="text-black dark:text-white font-bold text-xs tracking-wide">{service.title}</span>
                   </div>
                 </div>
               </div>
@@ -419,15 +468,15 @@ export default function Home({ initialHeroData, initialAboutData, initialBrandsD
       </section>
 
       {/* 7. What Our Clients Say */}
-      <section className="py-24 px-6 bg-[#fff5f7] overflow-hidden relative">
+      <section className="py-24 px-6 bg-[#fff5f7] dark:bg-[#0c0d12] overflow-hidden relative">
         <div className="text-center mb-16 relative z-10">
-          <h2 className="text-4xl md:text-5xl font-bold text-black">{initialTestimonialsData?.headline || "What Our"} <span className="text-[#ff5987]">{initialTestimonialsData?.highlightedWord || "Clients Say"}</span></h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white">{initialTestimonialsData?.headline || "What Our"} <span className="text-[#ff5987]">{initialTestimonialsData?.highlightedWord || "Clients Say"}</span></h2>
         </div>
         
         <div className="max-w-[1400px] mx-auto overflow-hidden relative z-10 px-4 group">
           <div ref={sliderRef} className="flex gap-6 md:gap-8 overflow-x-auto snap-x snap-mandatory pb-12 pt-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] scroll-smooth">
             {testimonials.map((test: any, i: number) => (
-              <div key={i} className="w-[90vw] md:w-[400px] lg:w-[450px] shrink-0 snap-center bg-white rounded-[2rem] p-8 lg:p-10 shadow-[0_15px_40px_rgba(255,89,135,0.08)] transition-all duration-300 flex flex-col relative z-20">
+              <div key={i} className="w-[90vw] md:w-[400px] lg:w-[450px] shrink-0 snap-center bg-white dark:bg-[#15171e] border border-gray-100 dark:border-white/10 rounded-[2rem] p-8 lg:p-10 shadow-[0_15px_40px_rgba(255,89,135,0.08)] transition-all duration-300 flex flex-col relative z-20">
                 {/* Top Row: Stars and Tag */}
                 <div className="flex justify-between items-start mb-8 gap-4 flex-wrap">
                   <div className="flex gap-1 text-yellow-400">
@@ -543,17 +592,32 @@ export default function Home({ initialHeroData, initialAboutData, initialBrandsD
            
            <div className="bg-white border border-gray-100 p-10 rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)]">
              <h3 className="text-2xl font-bold mb-8 text-center text-black">{initialContactData?.formTitle || "Get Your Free Growth Audit"}</h3>
-             <form className="space-y-4">
-               <div className="grid grid-cols-2 gap-4">
-                 <input type="text" placeholder="First Name" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-black focus:outline-none focus:border-[#ff5987] focus:bg-white transition-colors" />
-                 <input type="text" placeholder="Last Name" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-black focus:outline-none focus:border-[#ff5987] focus:bg-white transition-colors" />
+             {auditSuccess ? (
+               <div className="p-8 text-center bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-2xl">
+                 <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                   <CheckCircle size={28} />
+                 </div>
+                 <h4 className="text-xl font-bold text-black mb-1">Audit Request Received!</h4>
+                 <p className="text-gray-600 text-sm">We will analyze your website metrics and reach out within 24 hours.</p>
                </div>
-               <input type="email" placeholder="Email Address" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-black focus:outline-none focus:border-[#ff5987] focus:bg-white transition-colors" />
-               <input type="text" placeholder="Company Name" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-black focus:outline-none focus:border-[#ff5987] focus:bg-white transition-colors" />
-               <button type="button" className="w-full py-4 bg-[#ff5987] hover:bg-[#e04572] text-white rounded-xl font-bold text-lg mt-4 transition-colors shadow-lg shadow-[#ff5987]/30 transform hover:-translate-y-1">
-                 Submit Request
-               </button>
-             </form>
+             ) : (
+               <form onSubmit={handleAuditSubmit} className="space-y-4">
+                 {auditError && (
+                   <div className="p-3 text-sm text-red-500 bg-red-50 rounded-xl border border-red-200">
+                     {auditError}
+                   </div>
+                 )}
+                 <div className="grid grid-cols-2 gap-4">
+                   <input name="firstName" required type="text" placeholder="First Name" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-black focus:outline-none focus:border-[#ff5987] focus:bg-white transition-colors" />
+                   <input name="lastName" required type="text" placeholder="Last Name" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-black focus:outline-none focus:border-[#ff5987] focus:bg-white transition-colors" />
+                 </div>
+                 <input name="email" required type="email" placeholder="Email Address" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-black focus:outline-none focus:border-[#ff5987] focus:bg-white transition-colors" />
+                 <input name="company" type="text" placeholder="Company Name" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-black focus:outline-none focus:border-[#ff5987] focus:bg-white transition-colors" />
+                 <button type="submit" disabled={auditSubmitting} className="w-full py-4 bg-[#ff5987] hover:bg-[#e04572] text-white rounded-xl font-bold text-lg mt-4 transition-colors shadow-lg shadow-[#ff5987]/30 transform hover:-translate-y-1 disabled:opacity-70">
+                   {auditSubmitting ? 'Submitting...' : 'Submit Request'}
+                 </button>
+               </form>
+             )}
            </div>
         </div>
       </section>

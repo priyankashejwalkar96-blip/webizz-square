@@ -85,7 +85,7 @@ export default async function AboutPage() {
   const ctaButtonText = aboutData?.ctaButtonText || "Contact Us";
 
   return (
-    <div className="min-h-screen bg-gray-50 text-black font-sans pb-32 pt-40">
+    <div className="min-h-screen bg-gray-50 text-black font-sans pb-32 pt-16 md:pt-20">
       
       {/* 1. Hero Section */}
       <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center mb-32 relative">

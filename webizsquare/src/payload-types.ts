@@ -67,11 +67,17 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    users: User;
+    leads: Lead;
+    subscribers: Subscriber;
     pages: Page;
-    media: Media;
     services: Service;
+    'case-studies': CaseStudy;
+    testimonials: Testimonial;
+    clients: Client;
     policies: Policy;
+    media: Media;
+    users: User;
+    redirects: Redirect;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -79,11 +85,17 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>;
+    leads: LeadsSelect<false> | LeadsSelect<true>;
+    subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
-    media: MediaSelect<false> | MediaSelect<true>;
     services: ServicesSelect<false> | ServicesSelect<true>;
+    'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
+    testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
+    clients: ClientsSelect<false> | ClientsSelect<true>;
     policies: PoliciesSelect<false> | PoliciesSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
+    redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -133,6 +145,64 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads".
+ */
+export interface Lead {
+  id: number;
+  name: string;
+  company?: string | null;
+  email: string;
+  phone?: string | null;
+  serviceInterested?:
+    | (
+        | 'Website Development'
+        | 'Mobile Application'
+        | 'ERP Software'
+        | 'SEO'
+        | 'Graphic Design'
+        | 'Social Media'
+        | 'AI Integration'
+        | 'Other'
+      )
+    | null;
+  budgetRange?: ('under_25k' | '25k_50k' | '50k_150k' | '150k_500k' | 'above_500k') | null;
+  message?: string | null;
+  sourceType?: ('quote_form' | 'contact_form' | 'growth_audit' | 'whatsapp_click' | 'call_click' | 'career') | null;
+  timeline?: ('immediate' | '1_2_weeks' | '1_month' | 'future') | null;
+  status?: ('new' | 'contacted' | 'qualified' | 'proposal_sent' | 'won' | 'lost' | 'spam') | null;
+  priority?: ('low' | 'medium' | 'high' | 'urgent') | null;
+  /**
+   * Expected project revenue in INR or USD
+   */
+  expectedValue?: number | null;
+  assignedTo?: (number | null) | User;
+  followUpDate?: string | null;
+  /**
+   * Internal notes regarding communication and proposals.
+   */
+  internalNotes?: string | null;
+  utmSource?: string | null;
+  utmMedium?: string | null;
+  utmCampaign?: string | null;
+  utmTerm?: string | null;
+  utmContent?: string | null;
+  /**
+   * Google Ads Click ID
+   */
+  gclid?: string | null;
+  /**
+   * Meta Click ID
+   */
+  fbclid?: string | null;
+  landingPage?: string | null;
+  referrer?: string | null;
+  country?: string | null;
+  device?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -160,10 +230,44 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscribers".
+ */
+export interface Subscriber {
+  id: number;
+  email: string;
+  source?: string | null;
+  status?: ('subscribed' | 'unsubscribed') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
  */
 export interface Page {
   id: number;
+  seo?: {
+    /**
+     * Recommended: 50-60 characters. Appears in search engine results and browser tabs.
+     */
+    metaTitle?: string | null;
+    /**
+     * Recommended: 120-160 characters. Appears as the snippet beneath your title in Google search results.
+     */
+    metaDescription?: string | null;
+    /**
+     * Leave blank to use the default page URL automatically.
+     */
+    canonicalUrl?: string | null;
+    /**
+     * 1200x630px image shown when shared on Facebook, LinkedIn, Twitter/X.
+     */
+    ogImage?: (number | null) | Media;
+    /**
+     * Check this if this page should NOT appear in Google search results or sitemaps.
+     */
+    noIndex?: boolean | null;
+  };
   title: string;
   slug: string;
   layout?:
@@ -186,7 +290,7 @@ export interface Page {
               title: string;
               heading: string;
               desc: string;
-              image: number | Media;
+              image?: (number | null) | Media;
               id?: string | null;
             }[];
             stats?:
@@ -352,10 +456,32 @@ export interface Media {
  */
 export interface Service {
   id: number;
+  seo?: {
+    /**
+     * Recommended: 50-60 characters. Appears in search engine results and browser tabs.
+     */
+    metaTitle?: string | null;
+    /**
+     * Recommended: 120-160 characters. Appears as the snippet beneath your title in Google search results.
+     */
+    metaDescription?: string | null;
+    /**
+     * Leave blank to use the default page URL automatically.
+     */
+    canonicalUrl?: string | null;
+    /**
+     * 1200x630px image shown when shared on Facebook, LinkedIn, Twitter/X.
+     */
+    ogImage?: (number | null) | Media;
+    /**
+     * Check this if this page should NOT appear in Google search results or sitemaps.
+     */
+    noIndex?: boolean | null;
+  };
   title: string;
   slug: string;
   description: string;
-  image: number | Media;
+  image?: (number | null) | Media;
   icon: 'Layout' | 'Smartphone' | 'Database' | 'Search' | 'Globe' | 'PenTool' | 'Share2' | 'Bot' | 'Zap' | 'Shield';
   features?:
     | {
@@ -367,6 +493,101 @@ export interface Service {
    * Show this service in the dropdown and enable its page.
    */
   isActive?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-studies".
+ */
+export interface CaseStudy {
+  id: number;
+  title: string;
+  slug: string;
+  clientName: string;
+  industry?: string | null;
+  /**
+   * e.g., "+280% GMV Growth" or "1.1s Load Time"
+   */
+  keyMetric?: string | null;
+  liveUrl?: string | null;
+  /**
+   * Short overview shown on cards and sliders
+   */
+  summary: string;
+  challenge?: string | null;
+  solution?: string | null;
+  featuredImage?: (number | null) | Media;
+  technologies?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  testimonial?: {
+    quote?: string | null;
+    author?: string | null;
+    role?: string | null;
+  };
+  seo?: {
+    /**
+     * Under 60 characters recommended
+     */
+    metaTitle?: string | null;
+    /**
+     * Under 160 characters recommended
+     */
+    metaDescription?: string | null;
+    ogImage?: (number | null) | Media;
+    noIndex?: boolean | null;
+  };
+  /**
+   * Show on homepage portfolio showcase slider
+   */
+  featured?: boolean | null;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials".
+ */
+export interface Testimonial {
+  id: number;
+  name: string;
+  company?: string | null;
+  role?: string | null;
+  /**
+   * e.g. Nashik, Mumbai, Pune
+   */
+  location?: string | null;
+  rating: number;
+  source?: ('google' | 'clutch' | 'direct' | 'linkedin') | null;
+  /**
+   * e.g. ENTERPRISE ERP SOFTWARE
+   */
+  tag?: string | null;
+  quote: string;
+  photo?: (number | null) | Media;
+  /**
+   * Show on homepage testimonial slider
+   */
+  featured?: boolean | null;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "clients".
+ */
+export interface Client {
+  id: number;
+  name: string;
+  logo: number | Media;
+  website?: string | null;
+  order?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -402,6 +623,25 @@ export interface Policy {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "redirects".
+ */
+export interface Redirect {
+  id: number;
+  /**
+   * Source path (e.g. /wp-content/..., /old-service, /sitemap_index.xml)
+   */
+  from: string;
+  /**
+   * Destination URL or path (e.g. /services/website-design or /sitemap.xml)
+   */
+  to: string;
+  type?: ('301' | '302') | null;
+  enabled?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -425,24 +665,48 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: 'users';
-        value: number | User;
+        relationTo: 'leads';
+        value: number | Lead;
+      } | null)
+    | ({
+        relationTo: 'subscribers';
+        value: number | Subscriber;
       } | null)
     | ({
         relationTo: 'pages';
         value: number | Page;
       } | null)
     | ({
-        relationTo: 'media';
-        value: number | Media;
-      } | null)
-    | ({
         relationTo: 'services';
         value: number | Service;
       } | null)
     | ({
+        relationTo: 'case-studies';
+        value: number | CaseStudy;
+      } | null)
+    | ({
+        relationTo: 'testimonials';
+        value: number | Testimonial;
+      } | null)
+    | ({
+        relationTo: 'clients';
+        value: number | Client;
+      } | null)
+    | ({
         relationTo: 'policies';
         value: number | Policy;
+      } | null)
+    | ({
+        relationTo: 'media';
+        value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: number | User;
+      } | null)
+    | ({
+        relationTo: 'redirects';
+        value: number | Redirect;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -488,33 +752,63 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users_select".
+ * via the `definition` "leads_select".
  */
-export interface UsersSelect<T extends boolean = true> {
+export interface LeadsSelect<T extends boolean = true> {
   name?: T;
+  company?: T;
+  email?: T;
+  phone?: T;
+  serviceInterested?: T;
+  budgetRange?: T;
+  message?: T;
+  sourceType?: T;
+  timeline?: T;
+  status?: T;
+  priority?: T;
+  expectedValue?: T;
+  assignedTo?: T;
+  followUpDate?: T;
+  internalNotes?: T;
+  utmSource?: T;
+  utmMedium?: T;
+  utmCampaign?: T;
+  utmTerm?: T;
+  utmContent?: T;
+  gclid?: T;
+  fbclid?: T;
+  landingPage?: T;
+  referrer?: T;
+  country?: T;
+  device?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscribers_select".
+ */
+export interface SubscribersSelect<T extends boolean = true> {
   email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  resetPasswordRequestedAt?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
-  sessions?:
-    | T
-    | {
-        id?: T;
-        createdAt?: T;
-        expiresAt?: T;
-      };
+  source?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages_select".
  */
 export interface PagesSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        canonicalUrl?: T;
+        ogImage?: T;
+        noIndex?: T;
+      };
   title?: T;
   slug?: T;
   layout?:
@@ -686,6 +980,119 @@ export interface PagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services_select".
+ */
+export interface ServicesSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        canonicalUrl?: T;
+        ogImage?: T;
+        noIndex?: T;
+      };
+  title?: T;
+  slug?: T;
+  description?: T;
+  image?: T;
+  icon?: T;
+  features?:
+    | T
+    | {
+        feature?: T;
+        id?: T;
+      };
+  isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-studies_select".
+ */
+export interface CaseStudiesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  clientName?: T;
+  industry?: T;
+  keyMetric?: T;
+  liveUrl?: T;
+  summary?: T;
+  challenge?: T;
+  solution?: T;
+  featuredImage?: T;
+  technologies?:
+    | T
+    | {
+        name?: T;
+        id?: T;
+      };
+  testimonial?:
+    | T
+    | {
+        quote?: T;
+        author?: T;
+        role?: T;
+      };
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        ogImage?: T;
+        noIndex?: T;
+      };
+  featured?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials_select".
+ */
+export interface TestimonialsSelect<T extends boolean = true> {
+  name?: T;
+  company?: T;
+  role?: T;
+  location?: T;
+  rating?: T;
+  source?: T;
+  tag?: T;
+  quote?: T;
+  photo?: T;
+  featured?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "clients_select".
+ */
+export interface ClientsSelect<T extends boolean = true> {
+  name?: T;
+  logo?: T;
+  website?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "policies_select".
+ */
+export interface PoliciesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  content?: T;
+  lastUpdated?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
@@ -729,33 +1136,37 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "services_select".
+ * via the `definition` "users_select".
  */
-export interface ServicesSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  description?: T;
-  image?: T;
-  icon?: T;
-  features?:
-    | T
-    | {
-        feature?: T;
-        id?: T;
-      };
-  isActive?: T;
+export interface UsersSelect<T extends boolean = true> {
+  name?: T;
   updatedAt?: T;
   createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  resetPasswordRequestedAt?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "policies_select".
+ * via the `definition` "redirects_select".
  */
-export interface PoliciesSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  content?: T;
-  lastUpdated?: T;
+export interface RedirectsSelect<T extends boolean = true> {
+  from?: T;
+  to?: T;
+  type?: T;
+  enabled?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -805,7 +1216,79 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface SiteSetting {
   id: number;
+  siteName: string;
+  tagline?: string | null;
   logo?: (number | null) | Media;
+  logoDark?: (number | null) | Media;
+  favicon?: (number | null) | Media;
+  phone?: string | null;
+  email?: string | null;
+  /**
+   * Country code without +, e.g. 919172944434
+   */
+  whatsappNumber?: string | null;
+  address?: string | null;
+  businessHours?: string | null;
+  socialLinks?: {
+    linkedin?: string | null;
+    twitter?: string | null;
+    instagram?: string | null;
+    facebook?: string | null;
+    github?: string | null;
+    youtube?: string | null;
+  };
+  /**
+   * Used when page has no custom title
+   */
+  defaultMetaTitle?: string | null;
+  /**
+   * Format pattern for subpages
+   */
+  titleTemplate?: string | null;
+  /**
+   * Under 160 characters recommended for Google SERP snippet
+   */
+  defaultMetaDescription?: string | null;
+  /**
+   * Canonical root domain (no trailing slash)
+   */
+  canonicalBaseUrl?: string | null;
+  robotsIndexing?: ('index_follow' | 'noindex_nofollow') | null;
+  defaultOgImage?: (number | null) | Media;
+  organizationSchema?: {
+    legalName?: string | null;
+    founder?: string | null;
+    areaServed?: string | null;
+    priceRange?: string | null;
+  };
+  /**
+   * e.g. GTM-XXXXXXX
+   */
+  gtmId?: string | null;
+  /**
+   * e.g. G-XXXXXXXXXX
+   */
+  ga4Id?: string | null;
+  /**
+   * Content value from meta google-site-verification
+   */
+  searchConsoleMeta?: string | null;
+  /**
+   * Free heatmaps & session recordings ID
+   */
+  clarityId?: string | null;
+  /**
+   * e.g. 123456789012345
+   */
+  metaPixelId?: string | null;
+  /**
+   * HTML scripts inserted into <head>. Caution: only enter trusted tracking scripts.
+   */
+  customHeadScripts?: string | null;
+  /**
+   * HTML scripts inserted before </body>.
+   */
+  customBodyScripts?: string | null;
   headerLinks?:
     | {
         label: string;
@@ -942,7 +1425,47 @@ export interface ContactPage {
  * via the `definition` "site-settings_select".
  */
 export interface SiteSettingsSelect<T extends boolean = true> {
+  siteName?: T;
+  tagline?: T;
   logo?: T;
+  logoDark?: T;
+  favicon?: T;
+  phone?: T;
+  email?: T;
+  whatsappNumber?: T;
+  address?: T;
+  businessHours?: T;
+  socialLinks?:
+    | T
+    | {
+        linkedin?: T;
+        twitter?: T;
+        instagram?: T;
+        facebook?: T;
+        github?: T;
+        youtube?: T;
+      };
+  defaultMetaTitle?: T;
+  titleTemplate?: T;
+  defaultMetaDescription?: T;
+  canonicalBaseUrl?: T;
+  robotsIndexing?: T;
+  defaultOgImage?: T;
+  organizationSchema?:
+    | T
+    | {
+        legalName?: T;
+        founder?: T;
+        areaServed?: T;
+        priceRange?: T;
+      };
+  gtmId?: T;
+  ga4Id?: T;
+  searchConsoleMeta?: T;
+  clarityId?: T;
+  metaPixelId?: T;
+  customHeadScripts?: T;
+  customBodyScripts?: T;
   headerLinks?:
     | T
     | {

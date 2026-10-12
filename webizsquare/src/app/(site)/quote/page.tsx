@@ -1,6 +1,6 @@
 export default function QuotePage() {
   return (
-    <div className="pt-32 px-6 min-h-screen max-w-7xl mx-auto">
+    <div className="pt-16 md:pt-20 px-6 min-h-screen max-w-7xl mx-auto">
       <h1 className="text-4xl md:text-6xl font-bold mb-8">Get A <span className="text-[#ff5987]">Quote</span></h1>
       <p className="text-gray-400 text-lg max-w-2xl mb-8">
         Fill out the form below to receive a custom quote for your software or web development project.

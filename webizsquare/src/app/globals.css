@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --primary: #ff5987;
   --primary-dark: #e04572;
@@ -9,43 +11,101 @@
   --radius: 0.75rem;
 }
 
-[data-theme='dark'] {
-  --background: #121212;
+.dark {
+  --background: #0c0d12;
   --foreground: #ffffff;
 }
 
 /* 
-  Forcefully override hardcoded Tailwind background/text classes
-  when the dark mode toggle is active!
+  Global dark mode overrides (only active when .dark class is on html)
 */
-[data-theme='dark'] .bg-white,
-[data-theme='dark'] .bg-gray-50 {
+.dark .bg-white,
+.dark .bg-white\/95,
+.dark .bg-white\/90,
+.dark .bg-white\/80,
+.dark .bg-gray-50,
+.dark .bg-\[\#fff5f7\] {
   background-color: var(--background) !important;
   border-color: #333333 !important;
 }
 
-[data-theme='dark'] .text-black,
-[data-theme='dark'] .text-gray-900,
-[data-theme='dark'] .text-gray-800 {
+.dark .text-black,
+.dark .text-gray-900,
+.dark .text-gray-800 {
   color: #ffffff !important;
 }
 
-[data-theme='dark'] .text-gray-700,
-[data-theme='dark'] .text-gray-600 {
+.dark .text-gray-700,
+.dark .text-gray-600 {
   color: #d1d5db !important;
 }
 
-[data-theme='dark'] .bg-white\/5,
-[data-theme='dark'] .bg-white\/10,
-[data-theme='dark'] .bg-gray-100 {
+.dark .bg-white\/5,
+.dark .bg-white\/10,
+.dark .bg-gray-100 {
   background-color: #1a1a1a !important;
+}
+
+/* Service pills and floating badges dark mode styling */
+.dark .service-pill,
+.dark .bg-white\/95.rounded-full {
+  background-color: rgba(18, 19, 26, 0.92) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+}
+
+.dark .service-pill span,
+.dark .bg-white\/95.rounded-full span {
+  color: #ffffff !important;
+}
+
+/* Header dark mode specific styles */
+.dark .main-nav-header {
+  background-color: rgba(12, 13, 18, 0.96) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark .theme-logo-dark {
+  display: none !important;
+}
+
+.dark .theme-logo-white {
+  display: block !important;
+}
+
+.dark .main-nav-header .nav-link {
+  color: #ffffff !important;
+}
+
+.dark .main-nav-header .nav-link:hover {
+  color: #ff3b6a !important;
+}
+
+.dark .main-nav-dropdown {
+  background-color: #15171e !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark .main-nav-dropdown a {
+  color: #e5e7eb !important;
+}
+
+.dark .main-nav-dropdown a:hover {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  color: #ff3b6a !important;
+}
+
+.dark .theme-toggle-btn {
+  background-color: #1a1c23 !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #fbbf24 !important;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Custom scrollbar */

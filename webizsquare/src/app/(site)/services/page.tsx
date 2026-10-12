@@ -56,7 +56,7 @@ export default function ServicesPage() {
   ];
 
   return (
-    <div className="pt-32 pb-32 px-6 min-h-screen relative">
+    <div className="pt-16 md:pt-20 pb-32 px-6 min-h-screen relative">
       {/* Background Glow */}
       <div className="absolute top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#ff5987] rounded-full blur-[150px] opacity-10 pointer-events-none mix-blend-screen" />
 
@@ -106,11 +106,11 @@ export default function ServicesPage() {
 
               {/* Bottom Left Pill */}
               <div className="absolute bottom-6 left-6 right-6 flex items-center">
-                <div className="bg-white rounded-full py-3 px-5 flex items-center gap-3 shadow-[0_10px_30px_rgba(255,89,135,0.3)] transform transition-transform duration-300 group-hover:-translate-y-2">
-                  <div className="w-8 h-8 rounded-full bg-[#ff5987]/10 flex items-center justify-center">
+                <div className="service-pill bg-white dark:bg-[#12131a]/90 backdrop-blur-md border border-gray-200/50 dark:border-white/15 rounded-full py-3 px-5 flex items-center gap-3 shadow-[0_10px_30px_rgba(255,89,135,0.3)] transform transition-transform duration-300 group-hover:-translate-y-2">
+                  <div className="w-8 h-8 rounded-full bg-[#ff5987]/10 dark:bg-[#ff5987]/20 flex items-center justify-center">
                     {service.icon}
                   </div>
-                  <span className="text-black font-bold text-sm tracking-wide">
+                  <span className="text-black dark:text-white font-bold text-sm tracking-wide">
                     {service.title}
                   </span>
                 </div>

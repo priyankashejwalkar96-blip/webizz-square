@@ -47,7 +47,7 @@ export const AboutBlock: Block = {
           name: 'image',
           type: 'upload',
           relationTo: 'media',
-          required: true,
+          required: false,
         },
       ],
     },

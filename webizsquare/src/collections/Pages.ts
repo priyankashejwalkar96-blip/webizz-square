@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { seoFields } from './fields/seo'
 import { HeroBlock } from '../blocks/Hero'
 import { AboutBlock } from '../blocks/About'
 import { BrandsBlock } from '../blocks/Brands'
@@ -13,11 +14,13 @@ export const Pages: CollectionConfig = {
   slug: 'pages',
   admin: {
     useAsTitle: 'title',
+    group: 'Content',
   },
   access: {
     read: () => true,
   },
   fields: [
+    seoFields,
     {
       name: 'title',
       type: 'text',

@@ -66,7 +66,7 @@ export default function PortfolioPage() {
   ];
 
   return (
-    <div className="pt-32 pb-24 px-6 min-h-screen bg-white text-black">
+    <div className="pt-16 md:pt-20 pb-24 px-6 min-h-screen bg-white text-black">
       <div className="max-w-7xl mx-auto">
         
         {/* Header */}

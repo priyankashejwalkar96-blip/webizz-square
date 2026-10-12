@@ -10,19 +10,55 @@ interface QuoteModalProps {
 export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
+    setErrorMessage('');
+
+    try {
+      const formData = new FormData(e.currentTarget);
+      const payload = {
+        name: formData.get('name') as string,
+        phone: formData.get('phone') as string,
+        email: formData.get('email') as string,
+        serviceInterested: formData.get('serviceNeeded') as string,
+        message: formData.get('message') as string,
+        sourceType: 'quote_form',
+        landingPage: typeof window !== 'undefined' ? window.location.pathname : '',
+      };
+
+      const res = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || 'Failed to submit quote request');
+      }
+
+      // Track in dataLayer for Google Analytics / GTM (Section 13 specification)
+      if (typeof window !== 'undefined' && (window as any).dataLayer) {
+        (window as any).dataLayer.push({
+          event: 'generate_lead',
+          form_name: 'quote_modal',
+          service: payload.serviceInterested,
+        });
+      }
+
       setIsSuccess(true);
       setTimeout(() => {
         setIsSuccess(false);
         onClose();
-      }, 2000);
-    }, 1500);
+      }, 2500);
+    } catch (err: any) {
+      setErrorMessage(err.message || 'Something went wrong. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -77,28 +113,34 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                   </motion.div>
                 ) : (
                   <>
+                    {errorMessage && (
+                      <div className="p-3 text-sm text-red-500 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/50 rounded-xl">
+                        {errorMessage}
+                      </div>
+                    )}
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-gray-700 uppercase tracking-wider">Name</label>
-                        <input required type="text" placeholder="John Doe" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#ff5987]/20 focus:border-[#ff5987] transition-all text-black" />
+                        <label className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">Name</label>
+                        <input name="name" required type="text" placeholder="John Doe" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#ff5987]/20 focus:border-[#ff5987] transition-all text-black" />
                       </div>
                       <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-gray-700 uppercase tracking-wider">Phone</label>
-                        <input required type="tel" placeholder="+1 (555) 000-0000" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#ff5987]/20 focus:border-[#ff5987] transition-all text-black" />
+                        <label className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">Phone</label>
+                        <input name="phone" required type="tel" placeholder="+1 (555) 000-0000" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#ff5987]/20 focus:border-[#ff5987] transition-all text-black" />
                       </div>
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-gray-700 uppercase tracking-wider">Email</label>
-                      <input required type="email" placeholder="john@company.com" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#ff5987]/20 focus:border-[#ff5987] transition-all text-black" />
+                      <label className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">Email</label>
+                      <input name="email" required type="email" placeholder="john@company.com" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#ff5987]/20 focus:border-[#ff5987] transition-all text-black" />
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-gray-700 uppercase tracking-wider">Service Needed</label>
-                      <select required defaultValue="" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#ff5987]/20 focus:border-[#ff5987] transition-all text-black appearance-none">
+                      <label className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">Service Needed</label>
+                      <select name="serviceNeeded" required defaultValue="" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#ff5987]/20 focus:border-[#ff5987] transition-all text-black appearance-none">
                         <option value="" disabled>Select a service...</option>
                         <option value="Website Development">Website Development</option>
-                        <option value="Application Development">Application Development</option>
+                        <option value="Mobile Application">Mobile Application Development</option>
                         <option value="ERP Software">ERP Software Development</option>
                         <option value="SEO">Search Engine Optimization</option>
                         <option value="Other">Other IT Services</option>
@@ -106,8 +148,8 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-gray-700 uppercase tracking-wider">Message</label>
-                      <textarea required rows={3} placeholder="Tell us about your project requirements..." className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#ff5987]/20 focus:border-[#ff5987] transition-all text-black resize-none" />
+                      <label className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">Message</label>
+                      <textarea name="message" rows={3} placeholder="Tell us about your project requirements..." className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#ff5987]/20 focus:border-[#ff5987] transition-all text-black resize-none" />
                     </div>
 
                     <button

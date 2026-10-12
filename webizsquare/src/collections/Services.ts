@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { seoFields } from './fields/seo'
 
 export const Services: CollectionConfig = {
   slug: 'services',
@@ -10,6 +11,7 @@ export const Services: CollectionConfig = {
     read: () => true,
   },
   fields: [
+    seoFields,
     {
       name: 'title',
       type: 'text',
@@ -48,7 +50,7 @@ export const Services: CollectionConfig = {
       name: 'image',
       type: 'upload',
       relationTo: 'media',
-      required: true,
+      required: false,
     },
     {
       name: 'icon',
